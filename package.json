@@ -8,9 +8,6 @@
   },
   "devDependencies": {
     "eslint": "^3.10.2",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
     "react-scripts": "0.9.5"
   },
@@ -19,5 +16,21 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "Automate Internal Product Updates",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-morekoya/koshin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-morekoya/koshin/issues"
+  },
+  "homepage": "https://github.com/andela-morekoya/koshin#readme"
 }
