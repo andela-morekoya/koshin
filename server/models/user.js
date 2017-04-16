@@ -5,23 +5,23 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true,
       allowNull: false,
-      field: 'github_id',
+      field: 'github_id'
     },
     personalAccessToken: {
       type: DataTypes.STRING,
-      field: 'personal_access_token',
+      field: 'personal_access_token'
     },
     senderEmail: {
       type: DataTypes.STRING,
       validate: {
-        isEmail: true,
+        isEmail: true
       },
-      field: 'sender_email',
+      field: 'sender_email'
     },
     organisations: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      field: 'organisations',
-    },
+      field: 'organisations'
+    }
   },
     {
       timestamps: true,
@@ -32,25 +32,25 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'CASCADE',
             foreignKey: {
               name: 'userId',
-              field: 'user_id',
-            },
+              field: 'user_id'
+            }
           });
           User.hasMany(models.Email, {
             onDelete: 'CASCADE',
             foreignKey: {
               name: 'userId',
-              field: 'user_id',
-            },
+              field: 'user_id'
+            }
           });
           User.hasMany(models.Report, {
             onDelete: 'CASCADE',
             foreignKey: {
               name: 'userId',
-              field: 'user_id',
-            },
+              field: 'user_id'
+            }
           });
-        },
-      },
+        }
+      }
     });
   return User;
 };

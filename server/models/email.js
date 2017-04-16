@@ -3,20 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.STRING,
       primaryKey: true,
-      unique: true,
+      unique: true
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true,
+        isEmail: true
       },
-      field: 'email',
-    },
+      field: 'email'
+    }
   },
     {
       timestamps: true,
-      tableName: 'emails',
+      tableName: 'emails'
     });
   return Email;
 };
