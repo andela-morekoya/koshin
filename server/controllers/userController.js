@@ -1,80 +1,61 @@
-const models = require('../models');
-const Logger = require('../../tracer');
+import models from '../models';
+import Logger from '../../tracer';
 
-function addNewUser(req, res) {
-  models.User.create(req.body)
+function addNewUser(req) {
+  const userReq = req.user._json;
+  const user = {
+    id: userReq.id.toString(),
+    senderEmail: userReq.email
+  };
+  models.User.create(user)
     .then(() => {
-      models.Repo.findAll({
-        where: { githubId: req.body.githubId }
-      })
-        .then((repos) => {
-          const user = req.body;
-          user.repos = repos;
-          res.send(user);
-        })
-        .catch((err) => {
-          Logger.error(`Error: ${err}`);
-          res.send({ error: 'Error fetching user repo' });
-        });
+      Logger.info('User created successfully');
     })
     .catch((err) => {
       Logger.error(`Error: ${err}`);
-      res.send({ error: 'Error creating new user' });
     });
 }
 
-function fetchUser(req, res) {
+function editUser(req, res) {
   const user = req.body;
   models.User.update(req.body, {
-    where: { githubId: req.body.githubId }
+    where: { id: req.user._json.id.toString() }
   })
-    .then(() => {
-      models.Repo.findAll({
-        where: { userId: req.body.githubId }
-      })
-        .then((repos) => {
-          user.repos = repos;
-          res.json(user);
-        })
-        .catch((err) => {
-          Logger.error(`Error: ${err}`);
-          res.send({ error: 'Error fetching user data' });
-        });
+    .then((user) => {
+      if (res) {
+        res.json(user);
+      }
     })
     .catch((err) => {
       Logger.error(`Error: ${err}`);
-      res.send({ error: 'Error updating user data' });
+      if (res) {
+        res.send({ error: 'Error fetching user data' });
+      }
     });
 }
 
 class UserControllers {
-  createUsers(req, res) {
+  createUsers(req) {
     models.User.findOne({
-      where: { githubId: req.githubId }
+      where: { id: req.user._json.id.toString() }
     })
       .then((user) => {
         if (!user) {
-          return addNewUser(req, res);
+          return addNewUser(req);
         }
-        return fetchUser(req, res);
+        req.body = {
+          senderEmail: req.user._json.email
+        }
+        return editUser(req);
       })
       .catch((err) => {
         Logger.error(`Error: ${err}`);
-        res.send({ error: 'Error processing user data' });
       });
   }
 
   updateUser(req, res) {
-    models.User.update(req.body, {
-      where: { githubId: req.body.githubId }
-    })
-      .then((user) => {
-        res.send(user);
-      })
-      .catch((err) => {
-        Logger.error(`Error: ${err}`);
-      });
+    editUser(req, res);
   }
 }
 
-module.exports = new UserControllers();
+export default new UserControllers();

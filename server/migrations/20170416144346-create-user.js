@@ -2,11 +2,7 @@ module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.createTable('users', {
       id: {
-        allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
-      },
-      github_id: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -18,6 +14,12 @@ module.exports = {
       },
       organisations: {
         type: Sequelize.ARRAY(Sequelize.STRING), // eslint-disable-line
+      },
+      created_at: {
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        type: Sequelize.DATE
       }
     });
   },

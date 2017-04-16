@@ -1,5 +1,5 @@
-const models = require('../models');
-const Logger = require('../../tracer');
+import models from '../models';
+import Logger from '../../tracer';
 
 function fetchUserReports(req, res) {
   models.Report.findAll({
@@ -44,4 +44,4 @@ class ReportsControllers {
   }
 }
 
-module.exports = new ReportsControllers();
+export default new ReportsControllers();

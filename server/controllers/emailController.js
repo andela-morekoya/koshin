@@ -1,5 +1,5 @@
-const models = require('../models');
-const Logger = require('../../tracer');
+import models from '../models';
+import Logger from '../../tracer';
 
 function fetchUserEmails(req, res) {
   models.Email.findAll({
@@ -63,4 +63,4 @@ class EmailsControllers {
   }
 }
 
-module.exports = new EmailsControllers();
+export default new EmailsControllers();

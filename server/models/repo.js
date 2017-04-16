@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Repo = sequelize.define('Repo', {
     id: {
       type: DataTypes.STRING,
