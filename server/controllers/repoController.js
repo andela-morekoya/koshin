@@ -1,5 +1,5 @@
-const models = require('../models');
-const Logger = require('../../tracer');
+import models from '../models';
+import Logger from '../../tracer';
 
 function fetchUserRepos(req, res) {
   models.Repo.findAll({
@@ -64,4 +64,4 @@ class RepoControllers {
   }
 }
 
-module.exports = new RepoControllers();
+export default new RepoControllers();

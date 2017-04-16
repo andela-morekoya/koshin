@@ -9,7 +9,7 @@
     "lint:watch": "npm run lint -- --watch",
     "test": "mocha --reporter progress tools/testSetup.js src/**/*.test.js",
     "test:watch": "npm run test -- --watch",
-    "nodemon": "babel-watch server.js"
+    "nodemon": "node_modules/.bin/sequelize db:migrate && babel-watch server.js"
   },
   "author": "Cory House",
   "license": "MIT",
