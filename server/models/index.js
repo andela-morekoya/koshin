@@ -11,7 +11,7 @@ const options = {
   logging: console.log,
   /* eslint-enable no-console */
   benchmark: true,
-  dialect: config.dialect,
+  dialect: config.dialect
 };
 const sequelize = new Sequelize(config.url, Object.assign({}, config, options));
 

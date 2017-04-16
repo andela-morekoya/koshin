@@ -3,17 +3,17 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.STRING,
       primaryKey: true,
-      unique: true,
+      unique: true
     },
     report: {
       type: DataTypes.TEXT,
       allowNull: false,
-      field: 'report',
-    },
+      field: 'report'
+    }
   },
     {
       timestamps: true,
-      tableName: 'reports',
+      tableName: 'reports'
     });
   return Report;
 };
