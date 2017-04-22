@@ -3,7 +3,7 @@ import Logger from '../../tracer';
 
 function fetchUserRepos(req, res) {
   models.Repo.findAll({
-    where: { githubId: req.body.githubId }
+    where: { userId: req.params.id }
   })
     .then((repos) => {
       res.send(repos);
