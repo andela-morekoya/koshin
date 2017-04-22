@@ -4,9 +4,11 @@ import Logger from '../../tracer';
 function addNewUser(req) {
   const userReq = req.user._json;
   const user = {
-    id: userReq.id.toString(),
-    senderEmail: userReq.email
+    id: userReq.id.toString()
   };
+  if (userReq.email) {
+    user.senderEmail = userReq.email;
+  }
   models.User.create(user)
     .then(() => {
       Logger.info('User created successfully');
