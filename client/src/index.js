@@ -1,16 +1,27 @@
-import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { Route, Router, browserHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
-import routes from './routes';
-import store from './store/configureStore';
 import './styles/styles.css'; //Webpack can import CSS files too!
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import Base from './components/Base';
+import Main from './Main';
+import store from './store/configureStore';
+import { fetchUser } from './actions/userActions';
 
-render(
+function isLoggedIn() {
+  store.dispatch(fetchUser());
+}
+
+const routes = (
   <Provider store={store} >
-    <Router history={browserHistory} routes={routes} />
-  </Provider>,
-  document.getElementById('output')
+    <Router history={browserHistory}>
+      <Route path="/" component={Base} onEnter={isLoggedIn()}>
+        <IndexRoute component={Main} />
+      </Route>
+    </Router>
+  </Provider>
 );
+
+render(routes, document.getElementById('output'));
