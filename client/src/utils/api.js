@@ -1,8 +1,11 @@
-export const isUserLoggedIn = () => fetch('/loggedin', { credentials: 'include' })
-  .then(res => res.json()).
-  then(user => {
-    return user;
-  })
-  .catch((err) => {
-    return Promise.reject(err);
-  });
+import 'isomorphic-fetch';
+import apiPaths from './apiPaths';
+
+export function callEndpoint(endpoint) {
+  const url = apiPaths.API_URL + endpoint;
+  return fetch(url, {
+      credentials: 'include'
+    })
+    .then((res) => res.json())
+    .catch((err) => err.json());
+}
