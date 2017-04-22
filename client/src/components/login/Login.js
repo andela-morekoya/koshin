@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as userActions from '../../actions/userActions';
 import store from '../../store/configureStore';
 import * as api from '../../utils/api';
+import LoggedInView from '../loggedInView';
 
 class Login extends React.Component {
   constructor() {
@@ -30,9 +31,7 @@ class Login extends React.Component {
       return (<div />);
     }
     if (this.state.isLoggedIn) {
-      return (<div className="jumbotron">
-        <h1>The new Dashboard {this.props.user.displayName}</h1>
-      </div>);
+      return <LoggedInView />;
     }
     return (<div className="jumbotron">
       <h1>Welcome to Koshin</h1>
