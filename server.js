@@ -62,7 +62,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/v1/user/', route);
+app.use('/api/v1/user', route);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -73,7 +73,9 @@ app.get('/auth/github',
   passport.authenticate('github', { scope: ['user:email'] }));
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', {
+    failureRedirect: '/'
+  }),
   function (req, res) {
     res.redirect('/');
   });
