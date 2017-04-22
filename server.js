@@ -36,7 +36,7 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
-
+const oneDay = 60000 * 60 * 24;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -45,7 +45,7 @@ app.use(session({
   secret: process.env.EXPRESSECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { expires: 600000 }
+  cookie: { expires: oneDay }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
