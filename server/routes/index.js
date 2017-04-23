@@ -10,23 +10,23 @@ route.put('/:id', (req, res) => {
   userController.updateUser(req, res);
 });
 
-route.get('/:id/repo', (req, res) => {
+route.get('/:id/repos', (req, res) => {
   repoController.listRepos(req, res);
 });
 
-route.get('/:id/repo/:repoId', (req, res) => {
+route.get('/:id/repos/:repoId', (req, res) => {
   repoController.getRepo(req, res);
 });
 
-route.put('/:id/repo/:repoId', (req, res) => {
+route.put('/:id/repos/:repoId', (req, res) => {
   repoController.updateRepo(req, res);
 });
 
-route.post('/:id/repo', (req, res) => {
+route.post('/:id/repos', (req, res) => {
   repoController.addRepo(req, res);
 });
 
-route.delete('/:id/repo/:repoId', (req, res) => {
+route.delete('/:id/repos/:repoId', (req, res) => {
   emailController.removeRepo(req, res);
 });
 
