@@ -2,3 +2,36 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+body {
+  width: 100%;
+}
+
+#output {
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #4d4d4d;
+  margin: 0 auto;
+}
+
+a.active {
+  color: orange;
+}
+
+nav {
+  padding-top: 20px;
+}
+
+.icon-lg {
+  width: 1em; 
+  height: 1em;
+  font-size: 1.5em !important;
+  padding: 0 !important;
+  top: 0 !important;
+  margin: 0 auto;
+}
+
+.watched {
+  width: 100%;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.15);
+}

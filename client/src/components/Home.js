@@ -1,14 +1,17 @@
 import React from 'react';
 import AddRepos from './AddRepos';
+import WatchedRepos from './repos/watchedRepos';
 
 const Home = () =>
-<div>
-  <div className="col-md-3">
-    Hellow World!
-  </div>
-  <div className="col-md-9">
-    <AddRepos />
-  </div>
-</div>;
+  <div className="container-fluid">
+    <div className="row">
+      <div className="col-md-3">
+        <WatchedRepos />
+      </div>
+      <div className="col-md-8">
+        <AddRepos />
+      </div>
+    </div>
+  </div>;
 
 export default Home;

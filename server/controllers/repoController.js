@@ -4,7 +4,7 @@ import FancyID from './fancyid';
 
 function fetchUserRepos(req, res) {
   models.Repo.findAll({
-    where: { userId: req.body.userId }
+    where: { userId: req.params.id }
   })
     .then((repos) => {
       res.send(repos);
