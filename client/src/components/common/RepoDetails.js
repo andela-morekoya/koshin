@@ -4,9 +4,14 @@ class RepoDetails extends React.Component {
   constructor() {
     super();
     this.state = {
-      direction: 'down'
+      direction: 'down',
+      element: 'edit',
+      disabled: true,
+      description: ''
     };
     this.changeChevron = this.changeChevron.bind(this);
+    this.toggleDesciption = this.toggleDesciption.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
   }
 
   changeChevron(e) {
@@ -39,6 +44,45 @@ class RepoDetails extends React.Component {
       + (date.toString().length > 1 ? date : '0' + date);
   }
 
+  toggleDesciption() {
+    let edit = this.state.element;
+    if (edit === 'edit') {
+      edit = 'disable';
+    } else {
+      edit = 'edit';
+    }
+    const elem = document.querySelector('#repo-description');
+    this.setState({
+      disabled: !this.state.disabled,
+      element: edit,
+      description: elem.value
+    });
+  }
+
+  cancelEdit() {
+    const elem = document.querySelector('#repo-description');
+    elem.value = this.state.description;
+    this.toggleDesciption();
+  }
+
+  element() {
+    if (this.state.element === 'edit') {
+      return (
+        <i className="fa fa-pencil"
+          aria-hidden="true"
+          onClick={this.toggleDesciption}
+        >
+        </i>
+      );
+    }
+    return (
+      <div style={{display: 'inline-block'}}>
+        <input type="button" className="btn btn-danger" value="Cancel" onClick={this.cancelEdit} />
+        <input type="button" className="btn btn-success" value="Save" onClick={this.toggleDesciption} />
+      </div>
+    )
+  }
+
   render() {
     const repo = this.props.repo;
     return (
@@ -69,7 +113,9 @@ class RepoDetails extends React.Component {
             <input type="date" defaultValue={this.getDate()} />
           </div>
           <div>
-            <label>Description</label>: {repo.description}
+            <label>Description</label>: 
+            <textarea id="repo-description" disabled={this.state.disabled} defaultValue={repo.description} />
+            {this.element()}
           </div>
         </div>
       </div>
