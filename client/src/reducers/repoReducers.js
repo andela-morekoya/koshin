@@ -22,6 +22,9 @@ const allRepos = (state = initialState, action) => {
     case Types.RECEIVE_REPO_FAILURE:
       return state;
 
+    case Types.ADD_REPO_FAILURE:
+      return state;
+
     default:
       return state;
   }

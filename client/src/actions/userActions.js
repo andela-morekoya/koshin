@@ -61,3 +61,15 @@ export function fetchRepos(name) {
       .catch(err => dispatch(fetchRepoFailure(err.message)));
   };
 }
+
+export function AddRepoFailure(message) {
+  return createAction(Types.ADD_REPO_FAILURE)(message);
+}
+
+export function addToWatchedRepo(body) {
+  return dispatch => {
+    return api.postEndpoint(`/api/v1/user/${body.user_id}/repo`, body)
+      .then(data => data)
+      .catch(err => dispatch(AddRepoFailure(err.message)));
+  };
+}
