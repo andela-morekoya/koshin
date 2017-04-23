@@ -25,7 +25,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       report: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       created_at: {
         type: Sequelize.DATE

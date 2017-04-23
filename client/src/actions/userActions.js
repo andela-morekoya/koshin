@@ -2,6 +2,7 @@ import Types from './actionTypes';
 import { createAction } from 'redux-actions';
 import * as api from '../utils/api';
 import apiPaths from '../utils/apiPaths';
+import {fetchUserRepos} from './repoActions';
 
 export function fetchUserRequest() {
   return createAction(Types.REQUEST_USER_DETAILS)();
@@ -68,8 +69,8 @@ export function AddRepoFailure(message) {
 
 export function addToWatchedRepo(body) {
   return dispatch => {
-    return api.postEndpoint(`/api/v1/user/${body.user_id}/repo`, body)
-      .then(data => data)
+    return api.postEndpoint(`/api/v1/user/${body.userId}/repos`, body)
+      .then(data => dispatch(fetchUserRepos(body.userId)))
       .catch(err => dispatch(AddRepoFailure(err.message)));
   };
 }

@@ -53,7 +53,6 @@ class RepoDetails extends React.Component {
       lastReportDate: date,
       defaultReportBranch: branch
     }
-    console.log('repo content', content);
     this.props.addToWatchedRepo(content);
   }
 

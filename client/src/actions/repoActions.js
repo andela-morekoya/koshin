@@ -8,11 +8,11 @@ export function fetchRepoFailure(error) {
 }
 
 export function fetchRepoRequest() {
-  return createAction(Types.REQUEST_USER_REPOS)();
+  return createAction(Types.REQUEST_WATCHED_REPOS)();
 }
 
 export function fetchRepoResponse(data) {
-  return createAction(Types.FETCH_USER_REPO_RESPONSE)(data);
+  return createAction(Types.FETCH_WATCHED_REPO_RESPONSE)(data);
 }
 
 export function fetchUserRepos(user_id) {
