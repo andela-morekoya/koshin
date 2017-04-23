@@ -7,14 +7,14 @@ const initialState = {
 
 const watchedRepos = (state = initialState, action) => {
   switch (action.type) {
-    case Types.REQUEST_USER_REPOS:
+    case Types.REQUEST_WATCHED_REPOS:
       return Object.assign(
         {},
         state,
         { isFetching: true }
       );
     
-    case Types.FETCH_USER_REPO_RESPONSE:
+    case Types.FETCH_WATCHED_REPO_RESPONSE:
       return Object.assign(
         {}, 
         state, 

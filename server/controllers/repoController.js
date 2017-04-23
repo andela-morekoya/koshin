@@ -34,6 +34,7 @@ class RepoControllers {
   }
 
   addRepo(req, res) {
+    console.log('create');
     req.body.id = FancyID();
     models.Repo.create(req.body)
       .then(() => fetchUserRepos(req, res))
