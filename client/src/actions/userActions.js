@@ -23,3 +23,53 @@ export function fetchUser() {
       .catch(err => dispatch(fetchUserDetailsFailure(err.message)));
   };
 }
+
+export function fetchReposRequest() {
+  return createAction(Types.REQUEST_REPOS)();
+}
+
+export function fetchReposResponse(data) {
+  return createAction(Types.FETCH_REPOS_RESPONSE)(data);
+}
+
+export function fetchRepoFailure(error) {
+  return createAction(Types.RECEIVE_REPO_FAILURE)(error);
+}
+
+function fetchRepoBranch(full_name) {
+  return api.githubFetch(`/repos/${full_name}/branches`)
+    .then(data => data);
+}
+
+function getB(data, dispatch) {
+  return dispatch(
+    fetchReposResponse(data.map(repo => {
+      fetchRepoBranch(repo.full_name)
+        .then(branches => {
+          repo.branches = branches;
+        });
+      return repo;
+    }))
+  );
+}
+
+export function fetchRepos(name) {
+  return dispatch => {
+    dispatch(fetchReposRequest());
+    return api.githubFetch(`/users/${name}/repos`)
+      .then(data => getB(data, dispatch))
+      .catch(err => dispatch(fetchRepoFailure(err.message)));
+  };
+}
+
+export function AddRepoFailure(message) {
+  return createAction(Types.ADD_REPO_FAILURE)(message);
+}
+
+export function addToWatchedRepo(body) {
+  return dispatch => {
+    return api.postEndpoint(`/api/v1/user/${body.user_id}/repo`, body)
+      .then(data => data)
+      .catch(err => dispatch(AddRepoFailure(err.message)));
+  };
+}

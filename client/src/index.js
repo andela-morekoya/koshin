@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Route, Router, browserHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
-import './styles/styles.css'; //Webpack can import CSS files too!
+import 'jquery';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import './styles/styles.css'; //Webpack can import CSS files too!
 import Base from './components/Base';
 import Main from './Main';
 import store from './store/configureStore';

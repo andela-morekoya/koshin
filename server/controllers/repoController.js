@@ -1,5 +1,6 @@
 import models from '../models';
 import Logger from '../../tracer';
+import FancyID from './fancyid';
 
 function fetchUserRepos(req, res) {
   models.Repo.findAll({
@@ -33,6 +34,7 @@ class RepoControllers {
   }
 
   addRepo(req, res) {
+    req.body.id = FancyID();
     models.Repo.create(req.body)
       .then(() => fetchUserRepos(req, res))
       .catch((err) => {
