@@ -16,6 +16,7 @@ class RepoDetails extends React.Component {
     this.toggleDesciption = this.toggleDesciption.bind(this);
     this.cancelEdit = this.cancelEdit.bind(this);
     this.addRepo = this.addRepo.bind(this);
+    this.last7Days = this.last7Days.bind(this);
   }
 
   changeChevron(e) {
@@ -56,10 +57,15 @@ class RepoDetails extends React.Component {
     this.props.addToWatchedRepo(content);
   }
 
+  last7Days() {
+    const days7 = 60000 * 60 * 24 * 7;
+    return new Date(new Date().getTime() - days7);
+  }
+
   getDate() {
-    const now = new Date();
+    const now = this.last7Days();
     const year = now.getFullYear();
-    const month = now.getMonth();
+    const month = now.getMonth() + 1;
     const date = now.getDate();
     return year + '-'
       + (month.toString().length > 1 ? month : '0' + month) + '-'
@@ -129,7 +135,7 @@ class RepoDetails extends React.Component {
           </div>
         </div>
         <div id={repo.id}
-          className={`repodetails panel-body collapse ${this.props.className}`}>
+          className={'repodetails panel-body collapse'} >
           <label>Base Branch (For reports)</label>: {this.branchSelect()}
           <div style={{ marginLeft: '20px', display: 'inline' }}>
             <label>Start Report from: </label>
@@ -141,7 +147,7 @@ class RepoDetails extends React.Component {
             {this.element()}
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
