@@ -88,8 +88,7 @@ app.get('/logout', ensureAuthenticated, function (req, res) {
 
 app.get('/loggedin', (req, res) => {
   if (req.cookies.user_sid) {
-    userController.createUsers(req);
-    res.send(req.user);
+    userController.createUsers(req, res);
   } else {
     res.send('');
   }

@@ -14,6 +14,7 @@ module.exports = {
       },
       organisations: {
         type: Sequelize.ARRAY(Sequelize.STRING), // eslint-disable-line
+        defaultValue: []
       },
       created_at: {
         type: Sequelize.DATE

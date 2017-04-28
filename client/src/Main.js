@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './components/Login';
 import Home from './components/Home';
-import { connect, Provider } from 'react-redux';
+import { connect } from 'react-redux';
 
 function redirect(path) {
   window.location.href = path || '/';
@@ -29,7 +29,7 @@ Main.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.data
+    user: state.user.data.github
   };
 }
 
