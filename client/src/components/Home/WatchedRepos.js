@@ -10,7 +10,7 @@ class WatchedRepos extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchUserRepos(this.props.user.data.id);
+    this.props.fetchUserRepos(this.props.user.id);
     const { isFetching } = this.props.repos;
   }
 
@@ -131,7 +131,7 @@ WatchedRepos.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    user: state.user.data.github,
     repos: state.watchedRepos
   };
 }
