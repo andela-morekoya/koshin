@@ -1,9 +1,11 @@
 import models from '../models';
 import Logger from '../../tracer';
+import FancyID from './fancyid';
+import sendgrid from 'sendgrid';
 
 function fetchUserEmails(req, res) {
   models.Email.findAll({
-    where: { githubId: req.body.githubId }
+    where: { userId: req.params.id }
   })
     .then((emails) => {
       res.send({ emails });
@@ -23,8 +25,9 @@ class EmailsControllers {
     const emails = req.body.emails;
     emails.forEach((email) => {
       const stakeholder = {
+        id: FancyID(),
         email,
-        githubId: req.body.githubId
+        userId: req.params.id
       };
       models.Email.create(stakeholder)
         .then((record) => {
@@ -59,6 +62,37 @@ class EmailsControllers {
       .catch((err) => {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error deleting email' });
+      });
+  }
+
+  sendEmails(userId, sender, report) {
+    const helper = sendgrid.mail;
+    const sg = sendgrid(process.env.SENDGRID_API_KEY);
+    models.Email.findAll({
+      where: { userId }
+    })
+      .then((emails) => {
+        emails.forEach((email) => {
+          const from = new helper.Email(sender);
+          const to = new helper.Email(email.email);
+          const subject = 'Product Updates';
+          const content = new helper.Content('text/html', report);
+          const mail = new helper.Mail(from, subject, to, content);
+          const request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON()
+          });
+
+          sg.API(request, (err, reponse) => {
+            if (err) {
+              Logger.error(`Error: ${err}`);
+            }
+          });
+        });
+      })
+      .catch((err) => {
+        Logger.error(`Error: ${err}`);
       });
   }
 }
