@@ -1,7 +1,10 @@
 import Types from '../actions/actionTypes';
 
 const initialState = {
-  data: {},
+  data: {
+    github: {},
+    local: {}
+  },
   isFetching: false
 };
 
@@ -9,7 +12,7 @@ const user = (state = initialState, action) => {
   switch (action.type) {
     case Types.FETCH_USER_RESPONSE:
       return Object.assign({}, state, {
-        data: action.payload._json,
+        data: action.payload,
         isFetching: false
       });
 

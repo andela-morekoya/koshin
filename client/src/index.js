@@ -9,6 +9,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './styles/styles.css'; //Webpack can import CSS files too!
 import Base from './components/Base';
 import Main from './Main';
+import Settings from './components/Settings';
 import store from './store/configureStore';
 import { fetchUser } from './actions/userActions';
 
@@ -21,6 +22,7 @@ const routes = (
     <Router history={browserHistory}>
       <Route path="/" component={Base} onEnter={isLoggedIn()}>
         <IndexRoute component={Main} />
+        <Route path="/settings" component={Settings} />
       </Route>
     </Router>
   </Provider>

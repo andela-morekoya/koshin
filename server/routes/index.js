@@ -50,7 +50,7 @@ route.get('/:id/reports', (req, res) => {
   reportController.listReports(req, res);
 });
 
-route.post('/:id/reports', (req, res) => {
+route.post('/:id/report', (req, res) => {
   reportController.addReport(req, res);
 });
 

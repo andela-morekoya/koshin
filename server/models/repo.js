@@ -10,6 +10,11 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       field: 'name'
     },
+    productName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'product_name'
+    },
     url: {
       type: DataTypes.STRING,
       allowNull: false,

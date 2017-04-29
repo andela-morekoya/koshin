@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     organisations: {
       type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
       field: 'organisations'
     },
     createdAt: {
