@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUserRepos, updateRepoInfo } from '../../actions/repoActions';
+import { fetchUserRepos, updateRepoInfo, deleteWatchedRepo } from '../../actions/repoActions';
 
 class WatchedRepos extends React.Component {
   constructor(props) {
@@ -47,7 +47,10 @@ class WatchedRepos extends React.Component {
             <span>PRs Since Last Update: {}</span>
           </div>
           <div className="col-md-2 text-right">
-            <button className="btn btn-link icon-lg" type="button">
+            <button className="btn btn-link icon-lg" type="button" onClick={(e) => {
+              e.preventDefault();
+              return this.props.deleteWatchedRepo(repo);
+              }} >
               <span className="glyphicon glyphicon-trash"></span>
             </button>
           </div>
@@ -135,7 +138,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUserRepos, updateRepoInfo}, dispatch);
+  return bindActionCreators({fetchUserRepos, updateRepoInfo, deleteWatchedRepo}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchedRepos);

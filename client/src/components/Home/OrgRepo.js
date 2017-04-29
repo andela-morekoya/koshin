@@ -43,8 +43,11 @@ class OrgRepos extends React.Component {
       user.personalAccessToken = pat;
     }
 
-    this.props.updateUserDetails(user);
-    this.props.fetchOrgRepos(orgName, pat);
+    this.props.updateUserDetails(user).then(res => {
+      if (res.type !== 'RECEIVE_REPO_FAILURE') {
+        this.props.fetchOrgRepos(orgName, pat);
+      }
+    })
   }
 
   toggleButton() {
