@@ -3,7 +3,7 @@ import AccessToken from './AccessToken';
 import Emails from './Emails';
 
 const Settings = () =>
-  <div>
+  <div className="container-fluid container-fluid-main">
     <div className="col-md-2">
     <ul className="nav nav-pills nav-stacked">
       <li className="active">
