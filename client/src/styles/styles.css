@@ -3,8 +3,17 @@
   margin-right: 5px;
 }
 
+header {
+  width: 100vw;
+}
+
 body {
   width: 100%;
+}
+
+.container-fluid-main {
+  min-height: 85vh;
+  margin: 2em 1em;
 }
 
 #output {

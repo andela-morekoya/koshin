@@ -2,11 +2,8 @@ import React from 'react';
 
 const Footer = () =>
   <div style={{
-    width: '100%',
+    width: '100vw',
     textAlign: 'center',
-    position: 'fixed',
-    bottom: '0px',
-    marginLeft: '-15px',
     padding: '10px',
     backgroundColor: '#ddd'
   }}>
