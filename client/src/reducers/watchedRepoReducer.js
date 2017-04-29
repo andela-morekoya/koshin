@@ -21,6 +21,21 @@ const watchedRepos = (state = initialState, action) => {
         { isFetching: false, data: action.payload }
       );
 
+    case Types.SEND_REPO_INFO:
+        return Object.assign(
+          {}, state, {
+            isSending: true
+          }
+        );
+ 
+    case Types.UPDATE_REPO_INFO:
+      return Object.assign(
+        {}, state, {
+          isSending: false,
+          repoInfo: action.payload
+        }
+      );
+
     default:
       return state;
   }
