@@ -100,7 +100,6 @@ Emails.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state, '===============');
   return {
     user: state.user.data.github,
     emails: state.emails

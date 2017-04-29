@@ -27,7 +27,7 @@ route.post('/:id/repos', (req, res) => {
 });
 
 route.delete('/:id/repos/:repoId', (req, res) => {
-  emailController.removeRepo(req, res);
+  repoController.removeRepo(req, res);
 });
 
 route.get('/:id/emails', (req, res) => {
