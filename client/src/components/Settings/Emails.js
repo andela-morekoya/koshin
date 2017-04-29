@@ -44,7 +44,7 @@ class Emails extends React.Component {
 
   addUserEmails() {
     return (
-      <div style={{ width: '45%', display: 'inline-block' }} className="space">
+      <div style={{ width: '45%', display: 'inline-block' }}>
         <div className="form-group">
           <label htmlFor="emails">Add comma Separated email list:</label>
           <textarea className="form-control" ref="emails" rows="20" cols="50" id="emails" />
@@ -83,7 +83,7 @@ class Emails extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{ width: '45%', display: 'inline-block' }}>
           {this.showUsersEmails()}
         </div>
