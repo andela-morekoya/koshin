@@ -18,11 +18,6 @@ class Home extends React.Component {
     this.setActiveTab = this.setActiveTab.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   console.log('no way');
-  //   this.setActiveTab();
-  // }
-
   setActiveTab() {
     const tabs = this.state.tabs;
     if (!this.props.watchedRepos.length) {
@@ -37,7 +32,7 @@ class Home extends React.Component {
   render() {
     const tabs = this.state.tabs;
     return (
-      <div className="container-fluid">
+      <div className="container-fluid container-fluid-main">
         <div className="row">
           <div className="col-md-3">
             <WatchedRepos />

@@ -3,8 +3,23 @@
   margin-right: 5px;
 }
 
+header {
+  width: 100vw;
+}
+
+.avatar{
+  border-radius: 50%;
+  height: 80%;
+  margin: 0.5em;
+}
+
 body {
   width: 100%;
+}
+
+.container-fluid-main {
+  min-height: 85vh;
+  margin: 2em 1em;
 }
 
 #output {
@@ -15,6 +30,14 @@ body {
 
 a.active {
   color: orange;
+}
+
+.add-repo-btn {
+  margin: 1em 1em 0 0;
+}
+
+.add-repo-description {
+  margin-top: 1em;
 }
 
 .icon-lg {
