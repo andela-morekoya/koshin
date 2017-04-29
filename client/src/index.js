@@ -13,16 +13,35 @@ import Settings from './components/Settings';
 import store from './store/configureStore';
 import { fetchUser } from './actions/userActions';
 
-function isLoggedIn() {
-  store.dispatch(fetchUser());
+function redirectToHome() {
+  window.location.href = '/';
+}
+
+function isLoggedIn(nextState, replace, cb) {
+  store.dispatch(fetchUser())
+    .then((user) => {
+      const data = user.data ? user.data.github : null;
+      const location = window.location.pathname;
+      if (location !== '/' && !data) {
+        redirectToHome();
+        console.log('hia', data);
+        return cb();
+      }
+      return cb();
+    })
+    .catch((err) => {
+      redirectToHome();
+      return cb();
+    });
 }
 
 const routes = (
   <Provider store={store} >
     <Router history={browserHistory}>
-      <Route path="/" component={Base} onEnter={isLoggedIn()}>
+      <Route path="/" component={Base} onEnter={isLoggedIn}>
         <IndexRoute component={Main} />
         <Route path="/settings" component={Settings} />
+        <Route path="*" onEnter={redirectToHome} />
       </Route>
     </Router>
   </Provider>
