@@ -12,8 +12,7 @@ class Report extends React.Component {
   constructor() {
     super();
     this.state = {
-      reportingRepo: [],
-      report: ''
+      reportingRepo: []
     };
     this.buildReport = this.buildReport.bind(this);
     this.compileReport = this.compileReport.bind(this);
@@ -35,31 +34,43 @@ class Report extends React.Component {
     }
   }
 
+  privateRepos(repos) {
+    return repos.filter((repo) => repo.private);
+  }
+
   buildReport() {
+    const token = this.props.user.personalAccessToken;
     this.props.startReportBuild();
     const repos = this.props.watchedRepos.filter((repo) => {
       return repo.report;
     });
-    this.setState({ reportingRepo: repos }, () => {
-      this.props.fetchRepoPRs(repos);
-    });
+    if (token || !this.privateRepos(repos).length) {
+      this.setState({ reportingRepo: repos }, () => {
+        this.props.fetchRepoPRs(repos, token);
+      });
+      return;
+    }
+    Toastr.error('Please set your Personal Access Token in user settings.');
   }
 
   handleEditorChange(e) {
-    console.log('Content was updated:', e.target.getContent());
+    e.target.getContent();
   }
 
   compileReport() {
     let report = '';
     const repos = this.props.repoRPs.data || [];
-    report = repos.map((repo, index) => {
-      return reportThisRepo(repo, this.state.reportingRepo[index]);
-    }).join('');
-
+    const reportingRepo = this.state.reportingRepo;
+    if (repos.length && reportingRepo.length) {
+      report = repos.map((repo, index) => {
+        return reportThisRepo(repo, reportingRepo[index]);
+      }).join('');
+    }
     return report;
   }
 
   sendReport() {
+    const user = this.props.user;
     const report = window.tinyMCE.activeEditor.getContent();
     if (!report) {
       Toastr.error('Cannot send empty report body');
@@ -67,8 +78,8 @@ class Report extends React.Component {
     }
     const body = {
       report,
-      userId: this.props.user.id,
-      sender: this.props.user.email
+      userId: user.id,
+      sender: user.email
     };
     this.props.sendReport(body);
   }
@@ -105,7 +116,8 @@ class Report extends React.Component {
             resize: false,
             status_bar: false,
             elementpath: false,
-            toolbar: 'undo redo | bold italic underline | fontsizeselect fontselect | ' +
+            list_styles: "circle disc square",
+            toolbar: 'undo redo | bold italic underline | bullist numlist outdent indent | fontsizeselect fontselect | ' +
             'alignleft aligncenter alignright | autolink link emoticons | preview print'
           }}
           onChange={this.handleEditorChange}
@@ -140,7 +152,7 @@ function mapStateToProps(state) {
   return {
     watchedRepos: state.watchedRepos.data,
     repoRPs: state.repoRPs,
-    user: state.user.data,
+    user: state.user.data.local,
     report: state.report
   };
 }
