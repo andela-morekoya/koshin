@@ -23,7 +23,7 @@ export function fetchRepoPRs(repos) {
       repos.map((repo) => {
         const endpoint =
           `/repos/${repo.name}/pulls?state=closed&base=${repo.defaultReportBranch}`;
-        return api.githubFetch(endpoint, 'daacd3f6a84071c44a0c4625c61469a8133d8bea');
+        return api.githubFetch(endpoint, '');
       })
     )
       .then(data => dispatch(fetchPRsResponse(data)))

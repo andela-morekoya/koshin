@@ -43,7 +43,7 @@ function fetchRepoBranch(full_name, token) {
 function getBranches(data, dispatch) {
   return dispatch(
     fetchPersonalReposResponse(data.map(repo => {
-      fetchRepoBranch(repo.full_name, 'daacd3f6a84071c44a0c4625c61469a8133d8bea')
+      fetchRepoBranch(repo.full_name, '')
         .then(branches => {
           repo.branches = branches;
         });
@@ -55,7 +55,7 @@ function getBranches(data, dispatch) {
 export function fetchPersonalRepos(name) {
   return dispatch => {
     dispatch(fetchPersonalReposRequest());
-    return api.githubFetch(`/users/${name}/repos?`, 'daacd3f6a84071c44a0c4625c61469a8133d8bea')
+    return api.githubFetch(`/users/${name}/repos?`, '')
       .then(data => getBranches(data, dispatch))
       .catch(err => dispatch(fetchRepoFailure(err.message)));
   };
