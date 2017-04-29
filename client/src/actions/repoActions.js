@@ -2,6 +2,7 @@ import Types from './actionTypes';
 import { createAction } from 'redux-actions';
 import * as api from '../utils/api';
 import apiPaths from '../utils/apiPaths';
+import Toastr from 'toastr';
 
 export function fetchRepoFailure(error) {
   return createAction(Types.RECEIVE_REPO_FAILURE)(error);
@@ -40,10 +41,10 @@ function fetchRepoBranch(full_name, token) {
   return api.githubFetch(`/repos/${full_name}/branches?`, token);
 }
 
-function getBranches(data, dispatch) {
+function getBranches(data, dispatch, token) {
   return dispatch(
     fetchPersonalReposResponse(data.map(repo => {
-      fetchRepoBranch(repo.full_name, '')
+      fetchRepoBranch(repo.full_name, token)
         .then(branches => {
           repo.branches = branches;
         });
@@ -56,7 +57,7 @@ export function fetchPersonalRepos(name, token) {
   return dispatch => {
     dispatch(fetchPersonalReposRequest());
     return api.githubFetch(`/users/${name}/repos?`, token)
-      .then(data => getBranches(data, dispatch))
+      .then(data => getBranches(data, dispatch, token))
       .catch(err => dispatch(fetchRepoFailure(err.message)));
   };
 }
@@ -115,4 +116,15 @@ export function sendRepoInfo() {
  
  export function editRepoInfo(data) {
    return createAction(Types.UPDATE_REPO_INFO)(data);
+ }
+
+ export function deleteWatchedRepo(repo) {
+   return dispatch => {
+     return api.deleteEndPoint(`${apiPaths.USER_EP}/${repo.userId}${apiPaths.REPOS_EP}/${repo.id}`, repo)
+      .then(data => {
+        Toastr.success(`${repo.name} has been deleted`);
+        return dispatch(fetchRepoResponse(data));
+      })
+      .catch(err => dispatch(fetchRepoFailure(err.message)));
+   };
  }

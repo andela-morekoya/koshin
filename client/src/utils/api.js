@@ -6,8 +6,12 @@ export function callEndpoint(endpoint) {
   return fetch(url, {
     credentials: 'include'
   })
-    .then((res) => res.json())
-    .catch((err) => err.json());
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return res.json();
+    });
 }
 
 export function githubFetch(endpoint, token) {
@@ -16,8 +20,12 @@ export function githubFetch(endpoint, token) {
     url += 'access_token=' + token;
   }
   return fetch(url)
-    .then((res) => res.json())
-    .catch((err) => err.json());
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return res.json();
+    });
 }
 
 export function postEndpoint(endpoint, data) {
@@ -29,7 +37,12 @@ export function postEndpoint(endpoint, data) {
       'Content-Type': 'application/json'
     },
     credentials: 'include'
-  }).then((response) => response.json());
+  }).then((res) => {
+    if (res.status >= 400) {
+      throw new Error("Bad response from server");
+    }
+    return res.json();
+  });
 }
 
 export function updateEndPoint(endpoint, data) {
@@ -41,6 +54,27 @@ export function updateEndPoint(endpoint, data) {
       'Content-Type': 'application/json'
     },
     credentials: 'include'
-  }).then((response) => response.json());
+  }).then((res) => {
+    if (res.status >= 400) {
+      throw new Error("Bad response from server");
+    }
+    return res.json();
+  });
 }
 
+export function deleteEndPoint(endpoint, data) {
+  const url = apiPaths.API_URL + endpoint;
+  return fetch(url, {
+    method: 'DELETE',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+  }).then((res) => {
+    if (res.status >= 400) {
+      throw new Error("Bad response from server");
+    }
+    return res.json();
+  });
+}
