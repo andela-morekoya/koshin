@@ -17,10 +17,11 @@ const allRepos = (state = initialState, action) => {
 
   switch (action.type) {
     case Types.FETCH_PERSONAL_REPOS_RESPONSE:
-      personalRepos.data = action.payload;
-      personalRepos.isFetching = false;
       return Object.assign({}, state, {
-        personalRepos
+        personalRepos: {
+          data: action.payload,
+          isFetching: false
+        }
       });
 
     case Types.FETCH_ORG_REPOS_RESPONSE:
@@ -31,9 +32,8 @@ const allRepos = (state = initialState, action) => {
       });
 
     case Types.REQUEST_PERSONAL_REPOS:
-      personalRepos.isFetching = true;
       return Object.assign({}, state, {
-        personalRepos
+        personalRepos: { isFetching: true }
       });
 
     case Types.REQUEST_ORG_REPOS:
