@@ -37,7 +37,9 @@ class PersonalRepo extends React.Component {
         </div>
       </div>);
     }
-    return data.map((item, index) => <RepoDetails key={item.id} repo={item} />);
+    return data.map((item, index) => {
+      return <RepoDetails key={item.id} repo={item} />
+    });
   }
 
   render() {

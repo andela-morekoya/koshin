@@ -43,7 +43,7 @@ function fetchRepoBranch(full_name, token) {
 function getBranches(data, dispatch) {
   return dispatch(
     fetchPersonalReposResponse(data.map(repo => {
-      fetchRepoBranch(repo.full_name, '')
+      fetchRepoBranch(repo.full_name, 'f6274c1fa06d4bb76fee456c6a911a1317efdc05')
         .then(branches => {
           repo.branches = branches;
         });
@@ -55,7 +55,7 @@ function getBranches(data, dispatch) {
 export function fetchPersonalRepos(name) {
   return dispatch => {
     dispatch(fetchPersonalReposRequest());
-    return api.githubFetch(`/users/${name}/repos?`, '')
+    return api.githubFetch(`/users/${name}/repos?`, 'f6274c1fa06d4bb76fee456c6a911a1317efdc05')
       .then(data => getBranches(data, dispatch))
       .catch(err => dispatch(fetchRepoFailure(err.message)));
   };
@@ -101,4 +101,13 @@ export function fetchOrgRepos(name,token, privateRepo) {
 
 export function fetchOrgReposResponse(data) {
   return createAction(Types.FETCH_ORG_REPOS_RESPONSE)(data);
+}
+
+export function updateWatchedRepoDetails(data) {
+  return dispatch => {
+    console.log('update repo action', data);
+    return api.updateEndPoint(`${apiPaths.USER_EP}/${data.userId}/repos/${data.id}`, data)
+      .then(data => dispatch(fetchUserRepos(data.userId)))
+      .catch(err => dispatch(AddRepoFailure(err.message)));
+  }
 }

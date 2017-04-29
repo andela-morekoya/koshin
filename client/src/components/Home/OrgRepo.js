@@ -82,7 +82,7 @@ class OrgRepos extends React.Component {
       return <div>Organisation repo not found</div>;
     }
     return data.map((item, index) =>
-      <RepoDetails key={item.id} repo={item} className={index === 0 ? 'in' : ''} />
+      <RepoDetails key={item.id} repo={item} />
     );
   }
 

@@ -35,17 +35,19 @@ function updateOrgs(req, res, orgs) {
   models.User.findOne({
     where: { id: req.params.id }
   }).then((user) => {
-    user.organisations.push(orgs);
-    user.update({
-      organisations: user.organisations
-    }, {
-        where: { id: req.params.id }
-      }).then((result) => {
-        res.send({ github: req.user._json, local: result });
-      })
-      .catch((err) => {
-        Logger.error(`Error: ${err}`);
-      });
+    if (!user.organisations.includes(orgs)) {
+      user.organisations.push(orgs);
+      user.update({
+        organisations: user.organisations
+      }, {
+          where: { id: req.params.id }
+        }).then((result) => {
+          res.send({ github: req.user._json, local: result });
+        })
+        .catch((err) => {
+          Logger.error(`Error: ${err}`);
+        });
+    }
   })
     .catch((error) => {
       Logger.error(`Error: ${error}`);
