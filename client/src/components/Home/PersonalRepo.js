@@ -56,7 +56,6 @@ PersonalRepo.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('state=------', state);
   return {
     user: state.user.data.github,
     personalRepos: state.allRepos.personalRepos

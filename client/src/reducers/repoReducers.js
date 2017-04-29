@@ -25,10 +25,11 @@ const allRepos = (state = initialState, action) => {
       });
 
     case Types.FETCH_ORG_REPOS_RESPONSE:
-      orgRepos.data = action.payload;
-      orgRepos.isFetching = false;
       return Object.assign({}, state, {
-        orgRepos
+        orgRepos: {
+          data: action.payload,
+          isFetching: false
+        }
       });
 
     case Types.REQUEST_PERSONAL_REPOS:
@@ -37,9 +38,8 @@ const allRepos = (state = initialState, action) => {
       });
 
     case Types.REQUEST_ORG_REPOS:
-      orgRepos.isFetching = true;
       return Object.assign({}, state, {
-        orgRepos
+        orgRepos: { isFetching: true }
       });
 
     case Types.RECEIVE_REPO_FAILURE:
