@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Toastr from 'toastr';
 import { addToWatchedRepo } from '../../actions/repoActions';
 
 class RepoDetails extends React.Component {
@@ -102,12 +103,13 @@ class RepoDetails extends React.Component {
       productName: this.state.product_name,
       url: repo.url,
       description,
+      isPrivate: repo.private,
       lastReportDate: date,
       defaultReportBranch: branch || this.getDefaultBranch()
     };
 
     if (!content.defaultReportBranch) {
-      return alert(`Edit Repository settings, default branch is missing.`);
+      return Toastr.error('Edit Repository settings, default branch is missing.');
     }
     this.props.addToWatchedRepo(content);
   }

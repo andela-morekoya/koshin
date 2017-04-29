@@ -17,13 +17,13 @@ export function fetchPRsFailure(message) {
     dispatch(createAction(Types.FETCH_PRs_FAILURE)(message));
 }
 
-export function fetchRepoPRs(repos) {
+export function fetchRepoPRs(repos, token) {
   return dispatch => {
     Promise.all(
       repos.map((repo) => {
         const endpoint =
-          `/repos/${repo.name}/pulls?state=closed&base=${repo.defaultReportBranch}`;
-        return api.githubFetch(endpoint, '');
+          `/repos/${repo.name}/pulls?state=closed&base=${repo.defaultReportBranch}&`;
+        return api.githubFetch(endpoint, token);
       })
     )
       .then(data => dispatch(fetchPRsResponse(data)))
