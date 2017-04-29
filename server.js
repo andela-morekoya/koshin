@@ -9,8 +9,11 @@ import cookieParser from 'cookie-parser';
 import open from 'open';
 import path from 'path';
 import config from './webpack.config.dev';
+import userController from './server/controllers/userController';
+import route from './server/routes';
+import Logger from './tracer';
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(config);
 
@@ -33,16 +36,16 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
-
+const oneDay = 60000 * 60 * 24;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
-  secret: 'keyboard cat',
+  secret: process.env.EXPRESSECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { expires: 600000 }
+  cookie: { expires: oneDay }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,19 +62,20 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/api/v1/user', route);
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/');
 }
 
 app.get('/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] }),
-  function (req, res) {
-
-  });
+  passport.authenticate('github', { scope: ['user:email'] }));
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', {
+    failureRedirect: '/'
+  }),
   function (req, res) {
     res.redirect('/');
   });
@@ -84,22 +88,18 @@ app.get('/logout', ensureAuthenticated, function (req, res) {
 
 app.get('/loggedin', (req, res) => {
   if (req.cookies.user_sid) {
-    // console.log(req.user);
-    res.send(req.user);
+    userController.createUsers(req, res);
   } else {
     res.send('');
   }
 });
 
-app.all('*', function (req, res) {
+app.all('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/src/index.html'));
 });
 
-app.listen(port, function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Starting app on ${port} ...`);
-    // open(`http://localhost:${port}`);
+app.listen(port, (err) => {
+  if (!err) {
+    Logger.info(`App started on port: ${port}`);
   }
 });

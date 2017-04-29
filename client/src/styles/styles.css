@@ -1,8 +1,15 @@
+.space {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+body {
+  width: 100%;
+}
+
 #output {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
-  min-width: 550px;
-  max-width: 850px;
   margin: 0 auto;
 }
 
@@ -10,6 +17,46 @@ a.active {
   color: orange;
 }
 
-nav {
-  padding-top: 20px;
+.icon-lg {
+  width: 1em; 
+  height: 1em;
+  font-size: 1.5em !important;
+  padding: 0 !important;
+  top: 0 !important;
+  margin: 0 auto;
+}
+
+.watched {
+  width: 100%;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.15);
+}
+
+.toast {
+  color: white;
+  display: inline-block;
+  font-size: 20px;
+  padding: 10px 20px;
+  display: inline-block;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1000;
+  font-family: Consolas, Perpetua, 'Lucida Sans Typewriter';
+  border-radius: 10px;
+}
+.toast-info {
+  background-color: #3276b1;
+}
+.toast-info2 {
+  background-color: #2f96b4;
+}
+.toast-error {
+  background-color: #bd362f;
+}
+.toast-success {
+  background-color: #51a351;
+}
+.toast-warning {
+  background-color: #f89406;
 }

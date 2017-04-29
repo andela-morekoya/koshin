@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Repo = sequelize.define('Repo', {
     id: {
       type: DataTypes.STRING,
@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: 'name'
+    },
+    productName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'product_name'
     },
     url: {
       type: DataTypes.STRING,
@@ -30,6 +35,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     report: {
       type: DataTypes.BOOLEAN
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
   },
     {

@@ -10,9 +10,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      url: {
+      product_name: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      url: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true
       },
       description: {
         type: Sequelize.TEXT
@@ -24,13 +29,20 @@ module.exports = {
         type: Sequelize.STRING
       },
       report: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
+      created_at: {
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        type: Sequelize.DATE
       },
       user_id: {
         type: Sequelize.STRING,
         references: {
           model: 'users',
-          referenceKey: 'id'
+          referenceKey: 'user_id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

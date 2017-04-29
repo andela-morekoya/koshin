@@ -1,11 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    githubId: {
+    id: {
       type: DataTypes.STRING,
       primaryKey: true,
       unique: true,
-      allowNull: false,
-      field: 'github_id'
+      allowNull: false
     },
     personalAccessToken: {
       type: DataTypes.STRING,
@@ -20,7 +19,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     organisations: {
       type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
       field: 'organisations'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
   },
     {

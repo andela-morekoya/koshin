@@ -1,4 +1,4 @@
-const Tracer = require('tracer');
+import Tracer from 'tracer';
 
 // format tracer logger
 const Logger = Tracer.colorConsole({
@@ -11,4 +11,4 @@ const Logger = Tracer.colorConsole({
   ]
 });
 
-module.exports = Logger;
+export default Logger;
