@@ -102,3 +102,20 @@ export function fetchOrgRepos(name,token, privateRepo) {
 export function fetchOrgReposResponse(data) {
   return createAction(Types.FETCH_ORG_REPOS_RESPONSE)(data);
 }
+
+export function sendRepoInfo() {
+   return createAction(Types.SEND_REPO_INFO)();
+ }
+ 
+ export function updateRepoInfo(data) {
+   return dispatch => {
+     dispatch(sendRepoInfo());
+     return api.updateEndPoint(`${apiPaths.USER_EP}/${data.userId}${apiPaths.REPOS_EP}/data.id`, data)
+     .then(data => dispatch(editRepoInfo(data)))
+     .catch(error => dispatch(fetchRepoFailure(error.message)));
+   };
+ }
+ 
+ export function editRepoInfo(data) {
+   return createAction(Types.UPDATE_REPO_INFO)(data);
+ }

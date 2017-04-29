@@ -1,22 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUserRepos } from '../../actions/repoActions';
+import { fetchUserRepos, updateRepoInfo } from '../../actions/repoActions';
 
 class WatchedRepos extends React.Component {
   constructor(props) {
     super();
-    this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchUserRepos(this.props.user.id);
     const { isFetching } = this.props.repos;
-  }
-
-  handleCheckboxCheck(e){
-    e.preventDefault;
-    //implement functionality to handle this
   }
 
   repoInfo(repo) {
@@ -28,7 +22,10 @@ class WatchedRepos extends React.Component {
               className="icon-lg"
               type="checkbox"
               defaultChecked={repo.report}
-              onChange={this.handleCheckboxCheck} 
+              onChange={() => {
+                repo.report = !repo.report;
+                this.props.updateRepoInfo(repo);
+              }} 
             />
           </div>
           <div className="col-md-8">
@@ -125,6 +122,7 @@ class WatchedRepos extends React.Component {
 
 WatchedRepos.propTypes = {
   fetchUserRepos: React.PropTypes.func,
+  updateRepoInfo: React.PropTypes.func,
   user: React.PropTypes.object,
   repos: React.PropTypes.object
 };
@@ -137,7 +135,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUserRepos}, dispatch);
+  return bindActionCreators({fetchUserRepos, updateRepoInfo}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchedRepos);
