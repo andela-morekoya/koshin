@@ -17,6 +17,14 @@ a.active {
   color: orange;
 }
 
+.add-repo-btn {
+  margin: 1em 1em 0 0;
+}
+
+.add-repo-description {
+  margin-top: 1em;
+}
+
 .icon-lg {
   width: 1em; 
   height: 1em;

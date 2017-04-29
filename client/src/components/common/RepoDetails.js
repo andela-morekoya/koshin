@@ -76,7 +76,7 @@ class RepoDetails extends React.Component {
     const branches = this.getBranches();
 
     return (
-      <select
+      <select className="form-control"
         id={`select-${this.props.repo.id}-branch`}
         value={this.state.branch}
         onChange={this.handleBranchChange}
@@ -152,17 +152,19 @@ class RepoDetails extends React.Component {
   element() {
     if (this.state.element === 'edit') {
       return (
-        <i className="fa fa-pencil"
-          aria-hidden="true"
-          onClick={this.toggleDesciption}
-        >
-        </i>
+        <div className="form-inline">
+          <input type="button" 
+            className="btn btn-default add-repo-btn" 
+            value="Edit Description"
+            onClick={this.toggleDesciption}
+          />
+        </div>
       );
     }
     return (
-      <div style={{ display: 'inline-block' }}>
-        <input type="button" className="btn btn-danger" value="Cancel" onClick={this.cancelEdit} />
-        <input type="button" className="btn btn-success" value="Save" onClick={this.toggleDesciption} />
+      <div className="form-inline">
+        <input type="button" className="btn btn-danger add-repo-btn" value="Cancel" onClick={this.cancelEdit} />
+        <input type="button" className="btn btn-success add-repo-btn" value="Save" onClick={this.toggleDesciption} />
       </div>
     );
   }
@@ -201,19 +203,26 @@ class RepoDetails extends React.Component {
           </div>
         </div>
 
-        <div id={repo.id}
-          className={'repodetails panel-body collapse'} >
-          <label>Product name:</label>
-          <input type="text" value={this.state.product_name} onChange={this.getProductName} />
-          <label>Base Branch (For reports)</label>: {this.branchSelect()}
-          <div style={{ marginLeft: '20px', display: 'inline' }}>
-            <label>Start Report from: </label>
-            <input type="date" defaultValue={this.getDate()} id={`report-${this.props.repo.id}-date`} />
-          </div>
-          <div>
-            <label>Description</label>:
-            <textarea id={`repo-${this.props.repo.id}-description`} disabled={this.state.disabled} defaultValue={repo.description} />
-            {this.element()}
+        <div id={repo.id} className={'repodetails panel-body collapse'}>
+          <div className="row">
+            <div className="col-sm-6 form-inline">
+              <label>Product name: &nbsp;</label>
+              <input className="form-control" type="text" value={this.state.product_name} onChange={this.getProductName} />
+            </div>
+            <div className="col-sm-6 form-inline">
+              <div style={{ marginLeft: '20px', float: 'right' }}>
+                <label>Start Report from: &nbsp;</label>
+                <input className="form-control" type="date" defaultValue={this.getDate()} id={`report-${this.props.repo.id}-date`} />
+              </div>
+            </div>
+            <div className="col-sm-12 form-group add-repo-description">
+              <label>Base Branch (For reports)</label>: {this.branchSelect()}
+            </div>
+            <div className="col-sm-12 add-repo-description">
+              <label>Description:</label>
+              <textarea className="form-control" id={`repo-${this.props.repo.id}-description`} disabled={this.state.disabled} defaultValue={repo.description} />
+              {this.element()}
+            </div>
           </div>
         </div>
       </div >
