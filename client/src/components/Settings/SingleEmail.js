@@ -45,12 +45,12 @@ class SingleEmail extends React.Component {
           ref="email"
         />
         {this.state.disabled ?
-          <div style={{ width: '40%', display: 'inline-block', fontSize: '15px' }}>
-            <i style={{ width: '15%' }}
+          <div style={{ width: '35%', display: 'inline-block', fontSize: '15px' }}>
+            <i style={{ width: '30%', display: 'inline-block' }}
               className="form-control fa fa-pencil space btn btn-default"
               onClick={this.enableEdit}
             ></i>
-            <i style={{ width: '15%', color: 'white', backgroundColor: '#C03B1E' }}
+            <i style={{ width: '30%', color: 'white', backgroundColor: '#C03B1E', display: 'inline-block' }}
               className="form-control fa fa-trash space btn"
             ></i>
           </div>
