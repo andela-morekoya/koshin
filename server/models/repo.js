@@ -36,6 +36,11 @@ export default (sequelize, DataTypes) => {
     report: {
       type: DataTypes.BOOLEAN
     },
+    isPrivate: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_private',
+      allowNull: false
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'

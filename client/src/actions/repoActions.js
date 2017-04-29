@@ -52,10 +52,10 @@ function getBranches(data, dispatch) {
   );
 }
 
-export function fetchPersonalRepos(name) {
+export function fetchPersonalRepos(name, token) {
   return dispatch => {
     dispatch(fetchPersonalReposRequest());
-    return api.githubFetch(`/users/${name}/repos?`, '')
+    return api.githubFetch(`/users/${name}/repos?`, token)
       .then(data => getBranches(data, dispatch))
       .catch(err => dispatch(fetchRepoFailure(err.message)));
   };
@@ -86,12 +86,9 @@ function getOrgRepoBranches(data, dispatch, token) {
   );
 }
 
-export function fetchOrgRepos(name,token, privateRepo) {
+export function fetchOrgRepos(name,token) {
   return dispatch => {
-    let url = `/orgs/${name}/repos?per_page=100`;
-    if (privateRepo) {
-      url += '&type=private';
-    }
+    let url = `/orgs/${name}/repos?per_page=100&type=private&`;
     dispatch(fetchOrgReposRequest());
     return api.githubFetch(url, token)
       .then(data => getOrgRepoBranches(data, dispatch, token))

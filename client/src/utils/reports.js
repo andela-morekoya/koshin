@@ -26,7 +26,9 @@ function formatReport(features, repo) {
         <ul>
           ${features.map((feature) => {
       if (feature.trim()) {
-        return '<li>' + feature.trim() + '</li>';
+        if (!feature.includes('![image](')) {
+          return '<li>' + feature.trim() + '</li>';
+        }
       }
     }).join('')}
         </ul>
