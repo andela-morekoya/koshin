@@ -180,22 +180,24 @@ class RepoDetails extends React.Component {
     return (
       <div className="add-repo-list panel panel-default" style={{ margin: '10px' }}>
         <div className="panel-heading">
-
-          <h3 className="panel-title">
-            {repo.name} <span style={{ fontWeight: 'light' }}>
-              ({repo.full_name})</span>
-          </h3>
-
-          <div style={{ display: 'inline', float: 'right' }}>
-            <input type="button" className="btn btn-primary" name="repo_name" value="Add" onClick={this.addRepo} />
-            <i className={`fa fa-chevron-${this.state.direction}`}
-              aria-hidden="true"
-              style={{ marginLeft: '20px', fontSize: '25px' }}
-              data-toggle="collapse"
-              data-target={`#${repo.id}`}
-              onClick={this.changeChevron}
-            >
-            </i>
+          <div className="row">
+            <div className="col-sm-10">
+              <h3 className="panel-title">
+                {repo.name} <span style={{ fontWeight: 'light', lineHeight: '2em' }}>
+                  ({repo.full_name})</span>
+              </h3>
+            </div>
+            <div className="col-sm-2">
+                <input type="button" className="btn btn-primary" name="repo_name" value="Add" onClick={this.addRepo} />
+                <i className={`fa fa-chevron-${this.state.direction}`}
+                  aria-hidden="true"
+                  style={{ marginLeft: '20px', fontSize: '25px' }}
+                  data-toggle="collapse"
+                  data-target={`#${repo.id}`}
+                  onClick={this.changeChevron}
+                >
+                </i>
+            </div>
           </div>
         </div>
 

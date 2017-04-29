@@ -18,11 +18,6 @@ class Home extends React.Component {
     this.setActiveTab = this.setActiveTab.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   console.log('no way');
-  //   this.setActiveTab();
-  // }
-
   setActiveTab() {
     const tabs = this.state.tabs;
     if (!this.props.watchedRepos.length) {

@@ -107,7 +107,7 @@ class WatchedRepos extends React.Component {
               <h4>Repositories to Watch</h4>
             </div>
             <div className="col-md-2 text-center">
-              <button className="btn btn-link" type="button">
+              <button className="btn btn-link" type="button" >
                 <span className="glyphicon glyphicon-plus"></span>
               </button>
             </div>
