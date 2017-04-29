@@ -1,7 +1,7 @@
-import models from '../models';
-import Logger from '../../tracer';
-import FancyID from './fancyid';
-import sendgrid from 'sendgrid';
+const models = require('../models');
+const Logger = require('../../tracer');
+const FancyID = require('./fancyid');
+const sendgrid = require('sendgrid');
 
 function fetchUserEmails(req, res) {
   models.Email.findAll({
@@ -16,10 +16,10 @@ function fetchUserEmails(req, res) {
     });
 }
 
-class EmailsControllers {
+module.exports = {
   listEmails(req, res) {
     return fetchUserEmails(req, res);
-  }
+  },
 
   addEmail(req, res) {
     const emails = req.body.emails;
@@ -39,7 +39,7 @@ class EmailsControllers {
         });
     });
     return fetchUserEmails(req, res);
-  }
+  },
 
   updateEmail(req, res) {
     models.Email.update(req.body, {
@@ -50,7 +50,7 @@ class EmailsControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error adding repository' });
       });
-  }
+  },
 
   removeEmail(req, res) {
     models.Email.destroy({
@@ -63,7 +63,7 @@ class EmailsControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error deleting email' });
       });
-  }
+  },
 
   sendEmails(userId, sender, report) {
     const helper = sendgrid.mail;
@@ -95,6 +95,4 @@ class EmailsControllers {
         Logger.error(`Error: ${err}`);
       });
   }
-}
-
-export default new EmailsControllers();
+};
