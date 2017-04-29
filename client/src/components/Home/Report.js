@@ -3,7 +3,7 @@ import TinyMCE from 'react-tinymce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { startReportBuild, fetchRepoPRs } from '../../actions/prActions';
-import { sendReport } from '../../actions/reportActions';
+import { sendReportAction } from '../../actions/reportActions';
 import { reportThisRepo } from '../../utils/reports';
 import Toastr from 'toastr';
 
@@ -72,6 +72,7 @@ class Report extends React.Component {
   sendReport() {
     const user = this.props.user;
     const report = window.tinyMCE.activeEditor.getContent();
+    console.log('################', user)
     if (!report) {
       Toastr.error('Cannot send empty report body');
       return;
@@ -79,9 +80,11 @@ class Report extends React.Component {
     const body = {
       report,
       userId: user.id,
-      sender: user.email
+      sender: user.senderEmail
     };
-    this.props.sendReport(body);
+
+    console.log('===', body)
+    this.props.sendReportAction(body);
   }
 
   displayBody() {
@@ -143,7 +146,7 @@ Report.propTypes = {
   startReportBuild: React.PropTypes.func,
   watchedRepos: React.PropTypes.array,
   fetchRepoPRs: React.PropTypes.func,
-  sendReport: React.PropTypes.func,
+  sendReportAction: React.PropTypes.func,
   user: React.PropTypes.object.isRequired,
   report: React.PropTypes.object
 };
@@ -161,7 +164,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     startReportBuild,
     fetchRepoPRs,
-    sendReport
+    sendReportAction
   }, dispatch);
 }
 

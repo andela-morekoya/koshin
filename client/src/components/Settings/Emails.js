@@ -13,7 +13,8 @@ class Emails extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchUserEmails(this.props.user.id);
+    const id = this.props.user.id;
+    this.props.fetchUserEmails(id);
   }
 
   checkEmails(list) {
@@ -75,7 +76,7 @@ class Emails extends React.Component {
     }
     return (
       <div className="space">
-        {emails.map((email) => <SingleEmail email={email} key={email.id}/>)}
+        {emails.map((email) => <SingleEmail email={email} key={email.id} />)}
       </div>
     );
   }

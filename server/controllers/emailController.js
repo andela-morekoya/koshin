@@ -23,6 +23,9 @@ module.exports = {
 
   addEmail(req, res) {
     const emails = req.body.emails;
+    if (!emails || !emails.length) {
+      return res.send({ message: 'No Email to add' });
+    }
     emails.forEach((email) => {
       const stakeholder = {
         id: FancyID(),
@@ -86,7 +89,8 @@ module.exports = {
 
           sg.API(request, (err, reponse) => {
             if (err) {
-              Logger.error(`Error: ${err}`);
+              console.log(err.response.body.errors)
+              Logger.error(`Error: ${err.response.body.errors}`);
             }
           });
         });
