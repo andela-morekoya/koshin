@@ -1,6 +1,6 @@
-import models from '../models';
-import Logger from '../../tracer';
-import FancyID from './fancyid';
+const models = require('../models');
+const Logger = require('../../tracer');
+const FancyID = require('./fancyid');
 
 function fetchUserRepos(req, res) {
   models.Repo.findAll({
@@ -15,7 +15,7 @@ function fetchUserRepos(req, res) {
     });
 }
 
-class RepoControllers {
+module.exports = {
   getRepo(req, res) {
     models.findOne({
       where: { githubId: req.body.githubId }
@@ -27,11 +27,11 @@ class RepoControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error fetching repository' });
       });
-  }
+  },
 
   listRepos(req, res) {
     return fetchUserRepos(req, res);
-  }
+  },
 
   addRepo(req, res) {
     req.body.id = FancyID();
@@ -41,7 +41,7 @@ class RepoControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error adding repository' });
       });
-  }
+  },
 
   updateRepo(req, res) {
     models.Repo.update(req.body, {
@@ -52,7 +52,7 @@ class RepoControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error adding repository' });
       });
-  }
+  },
 
   removeRepo(req, res) {
     models.Repo.destroy({
@@ -64,6 +64,4 @@ class RepoControllers {
         res.send({ error: 'Error deleting repository' });
       });
   }
-}
-
-export default new RepoControllers();
+};

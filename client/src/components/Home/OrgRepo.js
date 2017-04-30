@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Toastr from 'toastr';
 import RepoDetails from '../common/RepoDetails';
 import { fetchOrgRepos } from '../../actions/repoActions';
 import { updateUserDetails } from '../../actions/userActions';
@@ -28,7 +29,16 @@ class OrgRepos extends React.Component {
   addUserOrganisation(e) {
     e.preventDefault();
     const orgName = this.refs.orgName.value;
-    const pat = this.refs.pat.value;
+    const orgs = this.props.user.organisations;
+    const pat = this.props.user.personalAccessToken || this.refs.pat.value;
+    const newName = e.target.value;
+    if (orgName.length > 100) {
+      return Toastr.error('Organisation name is too long');
+    }
+    if (orgs.indexOf(orgName.toLowerCase()) > -1) {
+      return this.props.fetchOrgRepos(orgName, pat);
+    }
+
     const user = {
       id: this.props.user.id,
       organisations: orgName
@@ -36,14 +46,20 @@ class OrgRepos extends React.Component {
     if (this.refs.pat) {
       user.personalAccessToken = pat;
     }
-    this.props.updateUserDetails(user);
-    this.props.fetchOrgRepos(orgName, pat, this.refs.privateRepo.checked);
+
+    this.props.updateUserDetails(user).then(res => {
+      if (res.type !== 'RECEIVE_REPO_FAILURE') {
+        this.props.fetchOrgRepos(orgName, pat);
+      }
+    })
   }
 
   toggleButton() {
     const orgName = this.refs.orgName.value;
-    const pat = this.refs.pat.value;
-    if (pat.trim() && orgName.trim()) {
+    const pat = this.refs.pat ? this.refs.pat.value : null;
+    if (orgName.trim() && pat === null) {
+      return this.setState({ disabled: false });
+    } else if (pat && pat.trim() && orgName.trim()) {
       return this.setState({ disabled: false });
     }
     return this.setState({ disabled: true });
@@ -53,18 +69,24 @@ class OrgRepos extends React.Component {
     return (
       <div style={{ margin: '10px 0px 0px 20px' }}>
         <form className="form-horizontal">
-          <div className="form-group">
-            Organization Name: <input type="text" ref="orgName" onChange={this.toggleButton} />
+          <div className="form-group space" style={{ width: '25%', display: 'inline-block', marginRight: '25px' }}>
+            <label>Organization Name</label>
+            <input className="form-control" type="text" ref="orgName" onChange={this.toggleButton} />
           </div>
-          <div className="form-group">
-            Personal Access Token: <input type="text" ref="pat" onChange={this.toggleButton} />
-          </div>
-
-          <div className="form-group">
-            <input type="checkbox" name="privateRepo" ref="privateRepo" />
-            <div className="col-sm-offset-2 col-sm-10">
-              <button onClick={this.addUserOrganisation} type="submit" className="btn btn-default" disabled={this.state.disabled}>Add Organization</button>
-            </div>
+          {
+            this.props.user.personalAccessToken ?
+              ''
+              :
+              <div className="form-group space" style={{ width: '40%', display: 'inline-block' }}>
+                <label htmlFo="pat">Personal Access Token</label>
+                <input type="text" className="form-control" id="pat" ref="pat" onChange={this.toggleButton} />
+              </div>
+          }
+          <div className="form-group space" style={{ width: '20%', display: 'inline-block', marginLeft: '25px' }}>
+            <input onClick={this.addUserOrganisation}
+              type="button"
+              className="btn btn-primary"
+              disabled={this.state.disabled} value="Add Organization" />
           </div>
         </form>
       </div>

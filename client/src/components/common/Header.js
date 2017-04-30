@@ -6,10 +6,10 @@ class Header extends React.Component {
   renderOnLogin() {
     const user = this.props.user;
     return (
-      <div style={{ float: 'right', display: 'flex', alignItems: 'baseline' }}>
+      <div style={{ float: 'right', display: 'flex', alignItems: 'center' }}>
+        <span>Welcome {user.name} | &nbsp;</span>
         <a href="/logout">Logout</a>
-        <span>{user.name}</span>
-        <img style={{ height: '80%' }} src={user.avatar_url} alt="LoggedIn user avater" />
+        <img className="avatar" src={user.avatar_url} alt="LoggedIn user avater" />
       </div>
     )
   }

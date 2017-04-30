@@ -1,8 +1,8 @@
-import models from '../models';
-import Logger from '../../tracer';
-import FancyID from './fancyid';
-import EmailController from './emailController.js';
-import RepoController from './repoController.js';
+const models = require('../models');
+const Logger = require('../../tracer');
+const FancyID = require('./fancyid');
+const EmailController = require('./emailController.js');
+const RepoController = require('./repoController.js');
 
 function fetchUserReports(req, res) {
   models.Report.findAll({
@@ -17,10 +17,10 @@ function fetchUserReports(req, res) {
     });
 }
 
-class ReportsControllers {
+const ReportsControllers = {
   listReports(req, res) {
     return fetchUserReports(req, res);
-  }
+  },
 
   addReport(req, res) {
     req.body.id = FancyID();
@@ -33,7 +33,7 @@ class ReportsControllers {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error adding report' });
       });
-  }
+  },
 
   removeReport(req, res) {
     models.Report.destroy({
@@ -49,4 +49,4 @@ class ReportsControllers {
   }
 }
 
-export default new ReportsControllers();
+module.exports = ReportsControllers;

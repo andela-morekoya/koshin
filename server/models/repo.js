@@ -1,4 +1,4 @@
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Repo = sequelize.define('Repo', {
     id: {
       type: DataTypes.STRING,
@@ -35,6 +35,11 @@ export default (sequelize, DataTypes) => {
     },
     report: {
       type: DataTypes.BOOLEAN
+    },
+    isPrivate: {
+      type: DataTypes.BOOLEAN,
+      field: 'is_private',
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,

@@ -11,7 +11,7 @@ function reportSentSuccess(message) {
   return createAction(Types.REPORT_SENT_SUCCESS)(message);
 }
 
-export function sendReport(content) {
+export function sendReportAction(content) {
   return dispatch => {
     return api.postEndpoint(`/api/v1/user/${content.userId}/report`, content)
       .then((data) => {

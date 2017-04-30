@@ -13,7 +13,8 @@ class Emails extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchUserEmails(this.props.user.id);
+    const id = this.props.user.id;
+    this.props.fetchUserEmails(id);
   }
 
   checkEmails(list) {
@@ -43,7 +44,7 @@ class Emails extends React.Component {
 
   addUserEmails() {
     return (
-      <div style={{ width: '45%', display: 'inline-block' }} className="space">
+      <div style={{ width: '45%', display: 'inline-block' }}>
         <div className="form-group">
           <label htmlFor="emails">Add comma Separated email list:</label>
           <textarea className="form-control" ref="emails" rows="20" cols="50" id="emails" />
@@ -75,14 +76,14 @@ class Emails extends React.Component {
     }
     return (
       <div className="space">
-        {emails.map((email) => <SingleEmail email={email} key={email.id}/>)}
+        {emails.map((email) => <SingleEmail email={email} key={email.id} />)}
       </div>
     );
   }
 
   render() {
     return (
-      <div>
+      <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{ width: '45%', display: 'inline-block' }}>
           {this.showUsersEmails()}
         </div>
@@ -100,7 +101,6 @@ Emails.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state, '===============');
   return {
     user: state.user.data.github,
     emails: state.emails

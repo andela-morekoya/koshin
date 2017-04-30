@@ -1,22 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUserRepos } from '../../actions/repoActions';
+import { fetchUserRepos, updateRepoInfo, deleteWatchedRepo } from '../../actions/repoActions';
 
 class WatchedRepos extends React.Component {
   constructor(props) {
     super();
-    this.handleCheckboxCheck = this.handleCheckboxCheck.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchUserRepos(this.props.user.id);
     const { isFetching } = this.props.repos;
-  }
-
-  handleCheckboxCheck(e){
-    e.preventDefault;
-    //implement functionality to handle this
   }
 
   repoInfo(repo) {
@@ -28,7 +22,10 @@ class WatchedRepos extends React.Component {
               className="icon-lg"
               type="checkbox"
               defaultChecked={repo.report}
-              onChange={this.handleCheckboxCheck} 
+              onChange={() => {
+                repo.report = !repo.report;
+                this.props.updateRepoInfo(repo);
+              }} 
             />
           </div>
           <div className="col-md-8">
@@ -50,7 +47,13 @@ class WatchedRepos extends React.Component {
             <span>PRs Since Last Update: {}</span>
           </div>
           <div className="col-md-2 text-right">
-            <button className="btn btn-link icon-lg" type="button">
+            <button className="btn btn-link icon-lg" type="button" onClick={(e) => {
+              e.preventDefault();
+
+              const token = this.props.localDetails.personalAccessToken;              
+
+              return this.props.deleteWatchedRepo(repo, token);
+              }} >
               <span className="glyphicon glyphicon-trash"></span>
             </button>
           </div>
@@ -110,7 +113,7 @@ class WatchedRepos extends React.Component {
               <h4>Repositories to Watch</h4>
             </div>
             <div className="col-md-2 text-center">
-              <button className="btn btn-link" type="button">
+              <button className="btn btn-link" type="button" >
                 <span className="glyphicon glyphicon-plus"></span>
               </button>
             </div>
@@ -125,6 +128,7 @@ class WatchedRepos extends React.Component {
 
 WatchedRepos.propTypes = {
   fetchUserRepos: React.PropTypes.func,
+  updateRepoInfo: React.PropTypes.func,
   user: React.PropTypes.object,
   repos: React.PropTypes.object
 };
@@ -132,12 +136,13 @@ WatchedRepos.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user.data.github,
+    localDetails: state.user.data.local,
     repos: state.watchedRepos
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUserRepos}, dispatch);
+  return bindActionCreators({fetchUserRepos, updateRepoInfo, deleteWatchedRepo}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchedRepos);

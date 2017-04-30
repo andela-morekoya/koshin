@@ -1,8 +1,8 @@
-import express from 'express';
-import userController from '../controllers/userController';
-import repoController from '../controllers/repoController';
-import emailController from '../controllers/emailController';
-import reportController from '../controllers/reportController';
+const express = require('express');
+const userController = require('../controllers/userController');
+const repoController = require('../controllers/repoController');
+const emailController = require('../controllers/emailController');
+const reportController = require('../controllers/reportController');
 
 const route = express.Router();
 
@@ -27,7 +27,7 @@ route.post('/:id/repos', (req, res) => {
 });
 
 route.delete('/:id/repos/:repoId', (req, res) => {
-  emailController.removeRepo(req, res);
+  repoController.removeRepo(req, res);
 });
 
 route.get('/:id/emails', (req, res) => {
@@ -58,4 +58,4 @@ route.delete('/:id/reports/:reportId', (req, res) => {
   reportController.removeReport(req, res);
 });
 
-export default route;
+module.exports = route;

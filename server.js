@@ -1,21 +1,29 @@
-import 'dotenv/config';
-import express from 'express';
-import webpack from 'webpack';
-import passport from 'passport';
-import { Strategy as GitHubStrategy } from 'passport-github2';
-import session from 'express-session';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import open from 'open';
-import path from 'path';
-import config from './webpack.config.dev';
-import userController from './server/controllers/userController';
-import route from './server/routes';
-import Logger from './tracer';
+const dotenv = require('dotenv').config({ silent: true });
+const express = require('express');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const userController = require('./server/controllers/userController');
+const route = require('./server/routes');
+const Logger = require('./tracer');
+const webpack = require('webpack');
+const config = require('./webpack.config.dev');
 
 const port = process.env.PORT || 3000;
 const app = express();
+if (!process.env.NODE_ENV) { process.env.NODE_ENV = 'development'; }
 const compiler = webpack(config);
+if (process.env.NODE_ENV === 'development') {
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
+app.use(require('webpack-hot-middleware')(compiler));
+}
 
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -39,6 +47,7 @@ passport.use(new GitHubStrategy({
 const oneDay = 60000 * 60 * 24;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static('./build'));
 app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
@@ -49,11 +58,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
-app.use(require('webpack-hot-middleware')(compiler));
 
 app.use((req, res, next) => {
   if (!req.user && req.cookies.user_sid) {
@@ -95,7 +99,7 @@ app.get('/loggedin', (req, res) => {
 });
 
 app.all('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/src/index.html'));
+  res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 app.listen(port, (err) => {
@@ -103,3 +107,6 @@ app.listen(port, (err) => {
     Logger.info(`App started on port: ${port}`);
   }
 });
+
+// for testing
+module.exports = app;

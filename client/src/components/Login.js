@@ -6,13 +6,12 @@ import { fetchUser } from '../actions/userActions';
 class Login extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div className="col-md-8">
-          <h3>Welcome to Koshin</h3>
-          <p>This section contains a brief description of what koshin is about.</p>
-        </div>
-        <div className="col-md-4">
-          <p>Ready To Get Started?</p>
+      <div className="container-fluid container-fluid-main">
+        <div className="col-md-offset-3 col-md-6">
+          <h2>Welcome to Koshin</h2>
+          <p className="lead">Helping you automate the generation of summary reports for all your Github repos</p>
+          <p className="add-repo-description">&nbsp;</p>
+          <p className="add-repo-description">Ready To Get Started?</p>
           <a href="/auth/github">
             <div
               style={{ padding: '10px', textAlign: 'center', color: 'white', backgroundColor: 'black', display: 'inline-block', cursor: 'pointer' }}

@@ -1,5 +1,5 @@
-import models from '../models';
-import Logger from '../../tracer';
+const models = require('../models');
+const Logger = require('../../tracer');
 
 function addNewUser(req, res) {
   const userReq = req.user._json;
@@ -76,7 +76,7 @@ function editUser(req, res) {
     });
 }
 
-class UserControllers {
+const UserControllers = {
   createUsers(req, res) {
     models.User.findOne({
       where: { id: req.user._json.id.toString() }
@@ -93,12 +93,12 @@ class UserControllers {
       .catch((err) => {
         Logger.error(`Error: ${err}`);
       });
-  }
+  },
 
   updateUser(req, res) {
     editUser(req, res);
   }
 }
 
-export default new UserControllers();
+module.exports = UserControllers;
 

@@ -16,8 +16,8 @@ class PersonalRepo extends React.Component {
   }
 
   fetchRepos() {
-    const user = this.props.user;
-    this.props.fetchPersonalRepos(user.login);
+    const user = this.props.user.github;
+    this.props.fetchPersonalRepos(user.login, this.props.user.local.personalAccessToken);
   }
 
   displayBody() {
@@ -56,9 +56,8 @@ PersonalRepo.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('state=------', state);
   return {
-    user: state.user.data.github,
+    user: state.user.data,
     personalRepos: state.allRepos.personalRepos
   };
 }

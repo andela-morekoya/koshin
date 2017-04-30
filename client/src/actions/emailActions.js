@@ -24,10 +24,28 @@ export function fetchUserEmails(userId) {
   };
 }
 
-export function addEmails(data) {
+export function addEmails(body) {
   return dispatch => {
-    return api.postEndpoint(`${apiPaths.USER_EP}/${data.userId}/emails`, data)
-      .then(data => dispatch(fetchUserEmails(data.userId)))
+    return api.postEndpoint(`${apiPaths.USER_EP}/${body.userId}/emails`, body)
+      .then(data => dispatch(fetchUserEmails(body.userId)))
+      .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
+  };
+}
+
+export function updateEmail(body) {
+  return dispatch => {
+    const url = `${apiPaths.USER_EP}/${body.userId}/emails/${body.id}`;
+    return api.updateEndPoint(url, body)
+      .then(data => dispatch(fetchUserEmails(body.userId)))
+      .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
+  };
+}
+
+export function deleteEmail(body) {
+  return dispatch => {
+    const url = `${apiPaths.USER_EP}/${body.userId}/emails/${body.id}`;
+    return api.deleteEndPoint(url)
+      .then(data => dispatch(fetchUserEmails(body.userId)))
       .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
   };
 }
