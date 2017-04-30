@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { fetchUserRepos, updateRepoInfo, deleteWatchedRepo } from '../../actions/repoActions';
 
 class WatchedRepos extends React.Component {
@@ -18,14 +18,14 @@ class WatchedRepos extends React.Component {
       <li className="list-group-item" key={repo.id}>
         <div className="row">
           <div className="col-md-2">
-            <input 
+            <input
               className="icon-lg"
               type="checkbox"
               defaultChecked={repo.report}
               onChange={() => {
                 repo.report = !repo.report;
                 this.props.updateRepoInfo(repo);
-              }} 
+              }}
             />
           </div>
           <div className="col-md-8">
@@ -37,7 +37,7 @@ class WatchedRepos extends React.Component {
             </button>
           </div>
         </div>
-        <div className="row" style={{marginTop: '1em'}}>
+        <div className="row" style={{ marginTop: '1em' }}>
           <div className="col-md-8 col-md-offset-2">
             <span>
               Last Report:&nbsp;
@@ -50,11 +50,11 @@ class WatchedRepos extends React.Component {
             <button className="btn btn-link icon-lg" type="button" onClick={(e) => {
               e.preventDefault();
 
-              const token = this.props.localDetails.personalAccessToken;              
+              const token = this.props.localDetails.personalAccessToken;
 
               return this.props.deleteWatchedRepo(repo, token);
-              }} >
-              <span className="glyphicon glyphicon-trash"></span>
+            }} >
+              <span className="glyphicon glyphicon-trash red" style={{ color: 'red' }} ></span>
             </button>
           </div>
         </div>
@@ -62,13 +62,13 @@ class WatchedRepos extends React.Component {
     );
   }
 
-  renderReposList() {   
+  renderReposList() {
     const repos = this.props.repos.data;
     let reposList;
     if (repos.length > 0) {
       reposList = repos.map((repo) => this.repoInfo(repo));
     } else {
-      reposList =  <div> You have no watched repos. Please add a repo </div>;
+      reposList = <div> You have no watched repos. Please add a repo </div>;
     }
     return (
       <div className="col-md-12">
@@ -77,7 +77,7 @@ class WatchedRepos extends React.Component {
         </ul>
       </div>
     );
-    
+
   }
 
   watchedRepoSearch() {
@@ -85,11 +85,11 @@ class WatchedRepos extends React.Component {
       <form className="form-inline">
         <div className="form-group" style={{ width: '100%' }}>
           <div className="input-group" style={{ width: '100%' }}>
-            <input 
+            <input
               type="text"
               className="form-control rounded"
               placeholder="Search..."
-              style={{ height:'3em' }}
+              style={{ height: '3em' }}
             />
             <div className="input-group-addon">
               <button className="btn btn-link" type="submit">
@@ -105,23 +105,23 @@ class WatchedRepos extends React.Component {
   render() {
     return (
       <div className="watched">
-      <div className="panel-body">
-        {this.watchedRepoSearch()}
-        <div className="watched-repos">
-          <div className="row">
-            <div className="col-md-10">
-              <h4>Repositories to Watch</h4>
+        <div className="panel-body">
+          {this.watchedRepoSearch()}
+          <div className="watched-repos">
+            <div className="row">
+              <div className="col-md-10">
+                <h4>Repositories to Watch</h4>
+              </div>
+              <div className="col-md-2 text-center">
+                <button className="btn btn-link" type="button">
+                  <span className="glyphicon glyphicon-plus"></span>
+                </button>
+              </div>
+              {this.renderReposList()}
             </div>
-            <div className="col-md-2 text-center">
-              <button className="btn btn-link" type="button" >
-                <span className="glyphicon glyphicon-plus"></span>
-              </button>
-            </div>
-            {this.renderReposList()}
           </div>
         </div>
-        </div>
-      </div>
+      </div >
     );
   }
 }
@@ -142,7 +142,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUserRepos, updateRepoInfo, deleteWatchedRepo}, dispatch);
+  return bindActionCreators({ fetchUserRepos, updateRepoInfo, deleteWatchedRepo }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchedRepos);

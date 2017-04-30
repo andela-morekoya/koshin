@@ -28,8 +28,8 @@ class AccessToken extends React.Component {
           <input type="text" ref="pat" className="form-control" id="pat" defaultValue={this.props.localDetails.personalAccessToken || ''} />
         </div>
         <div style={{ width: '70%' }}>
-          <div className="form-group" style={{ width: '10%', float: 'right' }}>
-            <input type="button" className="form-control btn btn-primary" value="Add / Edit " onClick={this.saveToken} />
+          <div className="form-group" style={{ width: '15%', float: 'right' }}>
+            <input type="button" className="form-control btn btn-primary" value="Add / Update " onClick={this.saveToken} />
           </div>
         </div>
       </div>

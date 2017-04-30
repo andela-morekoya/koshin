@@ -4,11 +4,15 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          isEmail: true
+        }
       },
       created_at: {
         type: Sequelize.DATE
@@ -20,7 +24,8 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'users',
-          referenceKey: 'user_id'
+          referenceKey: 'user_id',
+          unique: true
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

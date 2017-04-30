@@ -47,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'CASCADE',
             foreignKey: {
               name: 'userId',
-              field: 'user_id'
+              field: 'user_id',
+              unique: true
             }
           });
           User.hasMany(models.Report, {
