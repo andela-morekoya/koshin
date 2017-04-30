@@ -46,9 +46,9 @@ module.exports = {
 
   updateEmail(req, res) {
     models.Email.update(req.body, {
-      where: { id: req.body.emailId }
+      where: { id: req.params.emailId }
     })
-      .then(() => fetchUserEmails(req, res))
+      .then(() => res.send({ message: 'Update successful' }))
       .catch((err) => {
         Logger.error(`Error: ${err}`);
         res.send({ error: 'Error adding repository' });
@@ -57,7 +57,7 @@ module.exports = {
 
   removeEmail(req, res) {
     models.Email.destroy({
-      where: { email: req.body.email }
+      where: { id: req.params.emailId }
     })
       .then(() => {
         fetchUserEmails(req, res);
