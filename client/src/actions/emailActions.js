@@ -40,3 +40,12 @@ export function updateEmail(body) {
       .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
   };
 }
+
+export function deleteEmail(body) {
+  return dispatch => {
+    const url = `${apiPaths.USER_EP}/${body.userId}/emails/${body.id}`;
+    return api.deleteEndPoint(url)
+      .then(data => dispatch(fetchUserEmails(body.userId)))
+      .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
+  };
+}

@@ -57,7 +57,7 @@ module.exports = {
 
   removeEmail(req, res) {
     models.Email.destroy({
-      where: { email: req.body.email }
+      where: { id: req.params.emailId }
     })
       .then(() => {
         fetchUserEmails(req, res);

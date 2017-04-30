@@ -2,7 +2,7 @@ import React from 'react';
 import Toastr from 'toastr';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateEmail } from '../../actions/emailActions';
+import { updateEmail, deleteEmail } from '../../actions/emailActions';
 
 class SingleEmail extends React.Component {
   constructor() {
@@ -12,6 +12,7 @@ class SingleEmail extends React.Component {
       disabled: true
     };
     this.updateEmail = this.updateEmail.bind(this);
+    this.removeEmail = this.removeEmail.bind(this);
     this.toggleDisable = this.toggleDisable.bind(this);
     this.enableEdit = this.enableEdit.bind(this);
     this.cancelEdit = this.cancelEdit.bind(this);
@@ -38,7 +39,6 @@ class SingleEmail extends React.Component {
       email: newEmail,
       id: email.id
     };
-    console.log('hmmm', content)
     this.props.updateEmail(content);
     this.toggleDisable();
   }
@@ -59,6 +59,15 @@ class SingleEmail extends React.Component {
     this.toggleDisable();
   }
 
+  removeEmail() {
+    const email = this.props.email;
+    const content = {
+      userId: email.userId,
+      id: email.id
+    };
+    this.props.deleteEmail(content);
+  }
+
   render() {
     return (
       <div className="form-group">
@@ -76,6 +85,7 @@ class SingleEmail extends React.Component {
               onClick={this.enableEdit}
             ></i>
             <i style={{ width: '30%', color: 'white', backgroundColor: '#C03B1E', display: 'inline-block' }}
+              onClick={this.removeEmail}
               className="form-control fa fa-trash space btn"
             ></i>
           </div>
@@ -92,12 +102,14 @@ class SingleEmail extends React.Component {
 
 SingleEmail.propTypes = {
   email: React.PropTypes.object,
-  updateEmail: React.PropTypes.func
+  updateEmail: React.PropTypes.func,
+  deleteEmail: React.PropTypes.func
 };
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateEmail
+    updateEmail,
+    deleteEmail
   }, dispatch);
 }
 
