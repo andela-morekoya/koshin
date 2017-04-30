@@ -42,6 +42,15 @@ class AccessToken extends React.Component {
         <h3 style={{ textDecoration: 'underline' }}>
           How To Generate Personal Access Token
         </h3>
+        <div style={{fontSize: '20px', lineHeight: '2em'}}>
+          Visit <a href="https://github.com/settings/tokens/new">github</a> to generate Personal Access Token.
+          <p>At the minimum select:
+            <ul>
+              <li>Full access to private repos(if you intend to generate report for private repos)</li>
+              <li>Admin read access</li>
+            </ul>
+          </p>
+        </div>
       </div>
     );
   }
