@@ -21,7 +21,7 @@ export function updateUserDetails(user) {
         if (data.length) {
           return api.updateEndPoint(`${apiPaths.USER_EP}/${user.id}`, user)
             .then((updatedUser) => {
-              Toastr.success(`${user.organisations} has been added`);
+              Toastr.success(`${user.organisations} added successfully`);
               return dispatch(fetchUserResponse(updatedUser));
             })
             .catch(err => dispatch(fetchUserDetailsFailure(err.message)));

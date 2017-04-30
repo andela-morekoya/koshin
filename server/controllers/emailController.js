@@ -32,14 +32,21 @@ module.exports = {
         email,
         userId: req.params.id
       };
-      models.Email.create(stakeholder)
-        .then((record) => {
-          Logger.info(`New email ${record.email} added.`);
-        })
-        .catch((err) => {
-          Logger.error(`Error: ${err}`);
-          res.send({ error: 'Error adding email' });
+      models.Email.findOne({ where: { email: email } })
+        .then(mail => {
+          if (mail && mail.userId === stakeholder.userId) {
+            Logger.info(`Email exist already`);
+          } else {
+            models.Email.create(stakeholder)
+              .then((record) => {
+                Logger.info(`New email ${record.email} added.`);
+              })
+              .catch((err) => {
+                Logger.error(`Error: ${err}`);
+              });
+          }
         });
+
     });
     return fetchUserEmails(req, res);
   },

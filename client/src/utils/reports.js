@@ -1,6 +1,6 @@
 function getPRsFromDate(repoPRs, lastReportDate) {
   return repoPRs.filter((pr) =>
-    new Date(pr.closed_at) <= new Date(lastReportDate));
+    new Date(pr.closed_at) >= new Date(lastReportDate));
 }
 
 function getFeatures(PR) {

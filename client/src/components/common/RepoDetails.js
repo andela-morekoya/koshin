@@ -114,7 +114,7 @@ class RepoDetails extends React.Component {
 
     const token = this.props.localDetails.personalAccessToken;
 
-    this.props.addToWatchedRepo(content, token);
+    this.props.addToWatchedRepo(content, token).then(() => Toastr.success(`Repo successfully added`));
   }
 
   last7Days() {
