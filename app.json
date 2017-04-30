@@ -1,0 +1,32 @@
+{
+  "name": "koshin",
+  "scripts": {
+  },
+  "env": {
+    "CALLBACK_URL": {
+      "required": true
+    },
+    "EXPRESSECRET": {
+      "required": true
+    },
+    "GITHUB_CLIENT_ID": {
+      "required": true
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
