@@ -13,9 +13,9 @@ export function fetchPersonalRepos(name, token) {
                 return api.callEndpoint(`${apiPaths.USER_EP}/${personalRepos[0].owner.id}${apiPaths.REPOS_EP}`)
                     .then(watchedRepos => {
                         const data = [];
-                        personalRepos.map(pRepo => {
+                        personalRepos.forEach(pRepo => {
                             let found = false;
-                            watchedRepos.map(wRepo => {
+                            watchedRepos.forEach(wRepo => {
                                 wRepo.url === pRepo.url ? found = true : null;
                             });
                             found ? null : data.push(pRepo);
@@ -55,9 +55,9 @@ export function fetchOrgRepos(name, token) {
                 return api.callEndpoint(`${apiPaths.USER_EP}/${store.getState().user.data.github.id}${apiPaths.REPOS_EP}`)
                     .then(watchedRepos => {
                         const data = [];
-                        orgRepos.map(oRepo => {
+                        orgRepos.forEach(oRepo => {
                             let found = false;
-                            watchedRepos.map(wRepo => {
+                            watchedRepos.forEach(wRepo => {
                                 wRepo.url === oRepo.url ? found = true : null;
                             });
                             found ? null : data.push(oRepo);
