@@ -72,7 +72,6 @@ class Report extends React.Component {
   sendReport() {
     const user = this.props.user;
     const report = window.tinyMCE.activeEditor.getContent();
-    console.log('################', user)
     if (!report) {
       Toastr.error('Cannot send empty report body');
       return;
@@ -83,7 +82,6 @@ class Report extends React.Component {
       sender: user.senderEmail
     };
 
-    console.log('===', body)
     this.props.sendReportAction(body);
   }
 

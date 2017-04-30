@@ -24,7 +24,6 @@ function isLoggedIn(nextState, replace, cb) {
       const location = window.location.pathname;
       if (location !== '/' && !data) {
         redirectToHome();
-        console.log('hia', data);
         return cb();
       }
       return cb();
