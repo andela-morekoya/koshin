@@ -10,10 +10,8 @@ module.exports = {
       email: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
         validate: {
-          isEmail: true,
-          unique: true
+          isEmail: true
         }
       },
       created_at: {
@@ -26,7 +24,8 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'users',
-          referenceKey: 'user_id'
+          referenceKey: 'user_id',
+          unique: true
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',
