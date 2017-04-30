@@ -31,3 +31,12 @@ export function addEmails(body) {
       .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
   };
 }
+
+export function updateEmail(body) {
+  return dispatch => {
+    const url = `${apiPaths.USER_EP}/${body.userId}/emails/${body.id}`;
+    return api.updateEndPoint(url, body)
+      .then(data => dispatch(fetchUserEmails(body.userId)))
+      .catch(err => dispatch(fetchUserEmailsFailure(err.message)));
+  };
+}

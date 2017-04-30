@@ -1,4 +1,8 @@
 import React from 'react';
+import Toastr from 'toastr';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateEmail } from '../../actions/emailActions';
 
 class SingleEmail extends React.Component {
   constructor() {
@@ -12,10 +16,31 @@ class SingleEmail extends React.Component {
     this.enableEdit = this.enableEdit.bind(this);
     this.cancelEdit = this.cancelEdit.bind(this);
   }
-  
-  updateEmail(e) {
-    const email = e.target.value;
-    this.setState({ email });
+
+  updateEmail() {
+    const newEmail = this.refs.email.value;
+    const email = this.props.email;
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if(email.email === newEmail) {
+      return Toastr.info('No change was made to this email: ' + newEmail);
+    }
+
+    if(!newEmail.match(regex)) {
+      return Toastr.error('Please enter a valid email');
+    }
+
+    if (newEmail.length > 50) {
+      return Toastr.error('Email address is too long');
+    }
+    const content = {
+      userId: email.userId,
+      email: newEmail,
+      id: email.id
+    };
+    console.log('hmmm', content)
+    this.props.updateEmail(content);
+    this.toggleDisable();
   }
 
   toggleDisable() {
@@ -56,7 +81,7 @@ class SingleEmail extends React.Component {
           </div>
           :
           <div style={{ width: '35%', display: 'inline-block' }}>
-            <input style={{ width: '40%', display: 'inline-block' }} type="button" className="btn btn-primary form-control space" value="Save" onClick={this.toggleDisable} />
+            <input style={{ width: '40%', display: 'inline-block' }} type="button" className="btn btn-primary form-control space" value="Save" onClick={this.updateEmail} />
             <input style={{ width: '40%', display: 'inline-block' }} type="button" className="btn btn-danger form-control space" value="Cancel" onClick={this.cancelEdit} />
           </div>
         }
@@ -66,7 +91,14 @@ class SingleEmail extends React.Component {
 }
 
 SingleEmail.propTypes = {
-  email: React.PropTypes.object
+  email: React.PropTypes.object,
+  updateEmail: React.PropTypes.func
 };
 
-export default SingleEmail;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updateEmail
+  }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(SingleEmail);
