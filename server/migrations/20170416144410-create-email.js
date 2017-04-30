@@ -4,11 +4,17 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        validate: {
+          isEmail: true,
+          unique: true
+        }
       },
       created_at: {
         type: Sequelize.DATE

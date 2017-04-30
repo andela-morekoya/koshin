@@ -39,13 +39,20 @@ class Emails extends React.Component {
       emails: this.checkEmails(this.refs.emails.value),
       userId: this.props.user.id
     };
-    this.props.addEmails(data);
+    this.props.addEmails(data)
+      .then(() => Toastr.success(`Operation done successfully`));
   }
 
   addUserEmails() {
     return (
       <div style={{ width: '45%', display: 'inline-block' }}>
         <div className="form-group">
+          <ul>
+            <li>New and valid emails will be added successfully</li>
+            <li>Existing emails will be ignored</li>
+            <li>Invalid emails will be ignored</li>
+          </ul>
+          <br/>
           <label htmlFor="emails">Add comma Separated email list:</label>
           <textarea className="form-control" ref="emails" rows="20" cols="50" id="emails" />
         </div>
