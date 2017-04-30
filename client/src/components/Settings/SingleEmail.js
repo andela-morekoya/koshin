@@ -23,11 +23,11 @@ class SingleEmail extends React.Component {
     const email = this.props.email;
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if(email.email === newEmail) {
-      return Toastr.info('No change was made to this email: ' + newEmail);
+    if (email.email === newEmail) {
+      return Toastr.info('No changes were made to: ' + newEmail);
     }
 
-    if(!newEmail.match(regex)) {
+    if (!newEmail.match(regex)) {
       return Toastr.error('Please enter a valid email');
     }
 
@@ -66,6 +66,7 @@ class SingleEmail extends React.Component {
       id: email.id
     };
     this.props.deleteEmail(content);
+    Toastr.success(email.email + ' was successfully deleted');
   }
 
   render() {
