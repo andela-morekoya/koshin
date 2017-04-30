@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Toastr from 'toastr';
 import RepoDetails from '../common/RepoDetails';
 import { fetchOrgRepos } from '../../actions/repoActions';
 import { updateUserDetails } from '../../actions/userActions';
@@ -30,7 +31,10 @@ class OrgRepos extends React.Component {
     const orgName = this.refs.orgName.value;
     const orgs = this.props.user.organisations;
     const pat = this.props.user.personalAccessToken || this.refs.pat.value;
-
+    const newName = e.target.value;
+    if (orgName.length > 100) {
+      return Toastr.error('Organisation name is too long');
+    }
     if (orgs.indexOf(orgName.toLowerCase()) > -1) {
       return this.props.fetchOrgRepos(orgName, pat);
     }

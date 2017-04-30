@@ -177,7 +177,12 @@ class RepoDetails extends React.Component {
   getProductName(e) {
     let name = this.props.repo.product_name || this.props.repo.name;
     if (e) {
-      name = e.target.value;
+      const newName = e.target.value;
+      if (newName.length < 100) {
+        name = newName;
+      } else {
+        Toastr.warning('Max character length exceeded for product name.');
+      }
     }
     this.setState({ product_name: name });
   }
