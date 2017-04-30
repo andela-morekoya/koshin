@@ -89,7 +89,6 @@ module.exports = {
 
           sg.API(request, (err, reponse) => {
             if (err) {
-              console.log(err.response.body.errors)
               Logger.error(`Error: ${err.response.body.errors}`);
             }
           });
