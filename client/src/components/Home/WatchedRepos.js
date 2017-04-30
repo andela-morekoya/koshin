@@ -49,7 +49,10 @@ class WatchedRepos extends React.Component {
           <div className="col-md-2 text-right">
             <button className="btn btn-link icon-lg" type="button" onClick={(e) => {
               e.preventDefault();
-              return this.props.deleteWatchedRepo(repo);
+
+              const token = this.props.localDetails.personalAccessToken;              
+
+              return this.props.deleteWatchedRepo(repo, token);
               }} >
               <span className="glyphicon glyphicon-trash"></span>
             </button>
@@ -133,6 +136,7 @@ WatchedRepos.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user.data.github,
+    localDetails: state.user.data.local,
     repos: state.watchedRepos
   };
 }

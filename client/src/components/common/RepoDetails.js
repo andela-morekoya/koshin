@@ -111,7 +111,10 @@ class RepoDetails extends React.Component {
     if (!content.defaultReportBranch) {
       return Toastr.error('Edit Repository settings, default branch is missing.');
     }
-    this.props.addToWatchedRepo(content);
+
+    const token = this.props.localDetails.personalAccessToken;
+
+    this.props.addToWatchedRepo(content, token);
   }
 
   last7Days() {
@@ -241,7 +244,8 @@ RepoDetails.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.data.github
+    user: state.user.data.github,
+    localDetails: state.user.data.local
   };
 }
 

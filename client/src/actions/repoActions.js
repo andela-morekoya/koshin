@@ -89,15 +89,15 @@ function getOrgRepoBranches(data, dispatch, token) {
     );
 }
 
-export function addToWatchedRepo(newRepo) {
+export function addToWatchedRepo(newRepo, token) {
     return dispatch => {
         return api.postEndpoint(`/api/v1/user/${newRepo.userId}/repos`, newRepo)
             .then(data => {
                 const OrgOrUserName = newRepo.name.split('/')[0];
                 if (newRepo.isPrivate) {
-                    dispatch(fetchOrgRepos(OrgOrUserName, 'f8e465c2a3ba118454605adab7b5ff5794e54ea6'));
+                    dispatch(fetchOrgRepos(OrgOrUserName, token));
                 } else {
-                    dispatch(fetchPersonalRepos(OrgOrUserName, 'f8e465c2a3ba118454605adab7b5ff5794e54ea6'));
+                    dispatch(fetchPersonalRepos(OrgOrUserName, token));
                 }
                 dispatch(fetchUserRepos(newRepo.userId));
 
@@ -128,15 +128,15 @@ export function updateRepoInfo(data) {
     };
 }
 
-export function deleteWatchedRepo(repo) {
+export function deleteWatchedRepo(repo, token) {
     return dispatch => {
         return api.deleteEndPoint(`${apiPaths.USER_EP}/${repo.userId}${apiPaths.REPOS_EP}/${repo.id}`, repo)
             .then(data => {
                 const OrgOrUserName = repo.name.split('/')[0];
                 if (repo.isPrivate) {
-                    dispatch(fetchOrgRepos(OrgOrUserName, 'f8e465c2a3ba118454605adab7b5ff5794e54ea6'));
+                    dispatch(fetchOrgRepos(OrgOrUserName, token));
                 } else {
-                    dispatch(fetchPersonalRepos(OrgOrUserName, 'f8e465c2a3ba118454605adab7b5ff5794e54ea6'));
+                    dispatch(fetchPersonalRepos(OrgOrUserName, token));
                 }
                 dispatch(fetchRepoResponse(data));
                 Toastr.success(`${repo.name} has been removed from the list`);
