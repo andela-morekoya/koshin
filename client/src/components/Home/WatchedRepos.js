@@ -31,11 +31,6 @@ class WatchedRepos extends React.Component {
           <div className="col-md-8">
             <span><strong>{repo.name}</strong></span>
           </div>
-          <div className="col-md-2 text-right">
-            <button className="btn btn-link icon-lg" type="button">
-              <span className="glyphicon glyphicon-cog"></span>
-            </button>
-          </div>
         </div>
         <div className="row" style={{ marginTop: '1em' }}>
           <div className="col-md-8 col-md-offset-2">
@@ -82,7 +77,7 @@ class WatchedRepos extends React.Component {
 
   watchedRepoSearch() {
     return (
-      <form className="form-inline">
+      <form className="form-inline" style={{display:'none'}}>
         <div className="form-group" style={{ width: '100%' }}>
           <div className="input-group" style={{ width: '100%' }}>
             <input
@@ -111,11 +106,6 @@ class WatchedRepos extends React.Component {
             <div className="row">
               <div className="col-md-10">
                 <h4>Repositories to Watch</h4>
-              </div>
-              <div className="col-md-2 text-center">
-                <button className="btn btn-link" type="button">
-                  <span className="glyphicon glyphicon-plus"></span>
-                </button>
               </div>
               {this.renderReposList()}
             </div>
