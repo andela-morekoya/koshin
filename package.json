@@ -1,13 +1,13 @@
 {
-  "name": "pluralsight-redux-starter",
+  "name": "koshin",
   "version": "1.0.0",
-  "description": "Starter kit for React and Redux Pluralsight course by Cory House",
+  "description": "Helping you automate the generation of summary reports for all your Github repos",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.dev.js -p",
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "start": "npm run build && npm run migrate && node server.js"
   },
-  "author": "Cory House",
+  "author": "Morolake Orekoya, Abdulmujeeb Jamiu, Anselm Ezumezu",
   "license": "MIT",
   "dependencies": {
     "babel-cli": "6.8.0",
@@ -77,6 +77,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/coryhouse/pluralsight-redux-starter"
+    "url": "https://github.com/andela-morekoya/koshin"
   }
 }
