@@ -22,7 +22,7 @@ export function fetchRepoPRs(repos, token) {
     Promise.all(
       repos.map((repo) => {
         const endpoint =
-          `/repos/${repo.name}/pulls?state=closed&base=${repo.defaultReportBranch}&`;
+          `/repos/${repo.name}/pulls?state=closed&base=${repo.defaultReportBranch}`;
         return api.githubFetch(endpoint, token);
       })
     )

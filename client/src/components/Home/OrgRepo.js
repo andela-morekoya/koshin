@@ -30,36 +30,31 @@ class OrgRepos extends React.Component {
     e.preventDefault();
     const orgName = this.refs.orgName.value;
     const orgs = this.props.user.organisations;
-    const pat = this.props.user.personalAccessToken || this.refs.pat.value;
+    const pat = this.props.user.personalAccessToken;
+    if (!pat) {
+      return Toastr.error('Please set your Personal Access Token in user settings.');
+    }
     const newName = e.target.value;
     if (orgName.length > 100) {
       return Toastr.error('Organisation name is too long');
     }
-    if (orgs.indexOf(orgName.toLowerCase()) > -1) {
-      return this.props.fetchOrgRepos(orgName, pat);
-    }
 
     const user = {
       id: this.props.user.id,
-      organisations: orgName
+      organisations: orgName,
+      personalAccessToken: pat
     };
-    if (this.refs.pat) {
-      user.personalAccessToken = pat;
-    }
 
-    this.props.updateUserDetails(user).then(res => {
-      if (res.type !== 'RECEIVE_REPO_FAILURE') {
-        this.props.fetchOrgRepos(orgName, pat);
-      }
-    })
+    if (orgs.indexOf(orgName.toLowerCase()) > -1) {
+      return this.props.fetchOrgRepos(orgName, pat);
+    } else {
+      return this.props.updateUserDetails(user);
+    }
   }
 
   toggleButton() {
     const orgName = this.refs.orgName.value;
-    const pat = this.refs.pat ? this.refs.pat.value : null;
-    if (orgName.trim() && pat === null) {
-      return this.setState({ disabled: false });
-    } else if (pat && pat.trim() && orgName.trim()) {
+    if (orgName.trim()) {
       return this.setState({ disabled: false });
     }
     return this.setState({ disabled: true });
@@ -69,20 +64,24 @@ class OrgRepos extends React.Component {
     return (
       <div style={{ margin: '10px 0px 0px 20px' }}>
         <form className="form-horizontal">
-          <div className="form-group space" style={{ width: '25%', display: 'inline-block', marginRight: '25px' }}>
+          <div
+            className="form-group space"
+            style={{
+              width: '25%',
+              display: 'inline-block',
+              marginRight: '25px'
+            }}
+          >
             <label>Organization Name</label>
             <input className="form-control" type="text" ref="orgName" onChange={this.toggleButton} />
           </div>
-          {
-            this.props.user.personalAccessToken ?
-              ''
-              :
-              <div className="form-group space" style={{ width: '40%', display: 'inline-block' }}>
-                <label htmlFo="pat">Personal Access Token</label>
-                <input type="text" className="form-control" id="pat" ref="pat" onChange={this.toggleButton} />
-              </div>
-          }
-          <div className="form-group space" style={{ width: '20%', display: 'inline-block', marginLeft: '25px' }}>
+          <div
+            className="form-group space"
+            style={{
+              width: '20%',
+              display: 'inline-block',
+              marginLeft: '25px'
+            }}>
             <input onClick={this.addUserOrganisation}
               type="button"
               className="btn btn-primary"
@@ -114,7 +113,7 @@ class OrgRepos extends React.Component {
         {this.addOrgForm()}
         {this.renderOrgRepos()}
       </div>
-    )
+    );
   }
 }
 

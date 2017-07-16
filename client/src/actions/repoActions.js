@@ -8,7 +8,7 @@ import store from '../store/configureStore';
 export function fetchPersonalRepos(name, token) {
   return dispatch => {
     dispatch(fetchPersonalReposRequest());
-    return api.githubFetch(`/users/${name}/repos?per_page=100&`, token)
+    return api.githubFetch(`/users/${name}/repos?per_page=100`, token)
       .then(personalRepos => {
         return api.callEndpoint(`${apiPaths.USER_EP}/${personalRepos[0].owner.id}${apiPaths.REPOS_EP}`)
           .then(watchedRepos => {
@@ -50,7 +50,7 @@ function getBranches(data, dispatch, token) {
 export function fetchOrgRepos(name, token) {
   return dispatch => {
     dispatch(fetchOrgReposRequest());
-    return api.githubFetch(`/orgs/${name}/repos?type=private&per_page=100&`, token)
+    return api.githubFetch(`/orgs/${name}/repos?type=private&per_page=100`, token)
       .then(orgRepos => {
         return api.callEndpoint(`${apiPaths.USER_EP}/${store.getState().user.data.github.id}${apiPaths.REPOS_EP}`)
           .then(watchedRepos => {
@@ -70,7 +70,7 @@ export function fetchOrgRepos(name, token) {
 }
 
 function updateOrgRepos(name, token, newRepo, dispatch) {
-  return api.githubFetch(`/orgs/${name}/repos?type=private&`, token)
+  return api.githubFetch(`/orgs/${name}/repos?type=private`, token)
     .then(data => {
       const repoList = data.filter(repo => repo.url !== newRepo.url);
       getOrgRepoBranches(repoList, dispatch, token);
