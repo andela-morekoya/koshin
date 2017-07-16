@@ -17,7 +17,11 @@ export function callEndpoint(endpoint) {
 export function githubFetch(endpoint, token) {
   let url = apiPaths.GITHUB_REPO + endpoint;
   if (token) {
-    url += 'access_token=' + token;
+    if (url.endsWith('?')) {
+      url += 'access_token=' + token;
+    } else {
+      url += '&access_token=' + token;
+    }
   }
   return fetch(url)
     .then((res) => {

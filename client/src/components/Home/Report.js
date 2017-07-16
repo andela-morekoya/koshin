@@ -40,11 +40,11 @@ class Report extends React.Component {
 
   buildReport() {
     const token = this.props.user.personalAccessToken;
-    this.props.startReportBuild();
     const repos = this.props.watchedRepos.filter((repo) => {
       return repo.report;
     });
-    if (token || !this.privateRepos(repos).length) {
+    if (token) {
+      this.props.startReportBuild();
       this.setState({ reportingRepo: repos }, () => {
         this.props.fetchRepoPRs(repos, token);
       });

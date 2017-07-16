@@ -7,12 +7,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 const Home = (props) => {
-  const tabOneHead = props.watchedRepos.length < 1 ? 'active' : '';
-  const tabThreeHead = props.watchedRepos.length > 0 ? 'active' : '';
-
-  const tabOneBody = props.watchedRepos.length < 1 ? 'in active' : '';
-  const tabThreeBody = props.watchedRepos.length > 0 ? 'in active' : '';
-
   return (
     <div className="container-fluid container-fluid-main">
       <div className="row">
@@ -26,18 +20,18 @@ const Home = (props) => {
             </div>
           </Link>
           <ul className="nav nav-tabs">
-            <li className={tabOneHead} ><a data-toggle="tab" href="#your-repo">Your Repositories</a></li>
+            <li className="active" ><a data-toggle="tab" href="#your-repo">Your Repositories</a></li>
             <li><a data-toggle="tab" href="#org-repo">Organisation Repos</a></li>
-            <li className={tabThreeHead}><a data-toggle="tab" href="#report">Reports</a></li>
+            <li><a data-toggle="tab" href="#report">Reports</a></li>
           </ul>
           <div className="tab-content">
-            <div id="your-repo" className={`tab-pane fade ${tabOneBody}`}>
+            <div id="your-repo" className={`tab-pane fade in active`}>
               <PersonalRepo />
             </div>
             <div id="org-repo" className="tab-pane fade">
               <OrgRepo />
             </div>
-            <div id="report" className={`tab-pane fade ${tabThreeBody}`}>
+            <div id="report" className={`tab-pane fade`}>
               <Report />
             </div>
           </div>

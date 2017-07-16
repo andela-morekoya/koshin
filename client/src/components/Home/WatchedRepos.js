@@ -38,8 +38,6 @@ class WatchedRepos extends React.Component {
               Last Report:&nbsp;
               {repo.lastReportDate ? repo.lastReportDate.split('T')[0] : ''}
             </span>
-            <br />
-            <span>PRs Since Last Update: {}</span>
           </div>
           <div className="col-md-2 text-right">
             <button className="btn btn-link icon-lg" type="button" onClick={(e) => {
@@ -120,7 +118,9 @@ WatchedRepos.propTypes = {
   fetchUserRepos: React.PropTypes.func,
   updateRepoInfo: React.PropTypes.func,
   user: React.PropTypes.object,
-  repos: React.PropTypes.object
+  repos: React.PropTypes.object,
+  deleteWatchedRepo: React.PropTypes.func,
+  localDetails: React.PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -132,7 +132,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchUserRepos, updateRepoInfo, deleteWatchedRepo }, dispatch);
+  return bindActionCreators({
+    fetchUserRepos,
+    updateRepoInfo,
+    deleteWatchedRepo
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchedRepos);
