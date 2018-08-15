@@ -8,8 +8,8 @@
     "start": "npm run build && npm run migrate && node server.js"
   },
   "engines": {
-    "node": ">=0.10.22",
-    "npm": ">=1.3.14"
+    "node": ">=6.11.1",
+    "npm": ">=3.10.10"
   },
   "author": "Morolake Orekoya, Abdulmujeeb Jamiu, Anselm Ezumezu",
   "license": "MIT",
